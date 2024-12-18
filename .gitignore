@@ -1,1 +1,17 @@
-capacity/settings
+# Django settings
+capacity/settings.py
+
+# Django migrations
+accounts/migrations/*
+dashboard/migrations/*
+resources/migrations/*
+training/migrations/*
+trainers/migrations/*
+
+
+
+# Media and uploaded files (one level up)
+profile/
+
+trainer_photos/
+trainee_photos/
