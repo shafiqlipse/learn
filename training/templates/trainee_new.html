@@ -197,6 +197,10 @@
                   {{form.level}}
                 </div>
                 <div class="field">
+                  <label>Residence</label>
+                  {{form.residence_type}}
+                </div>
+                <div class="field">
                   <label>Transaction ID</label>
                   {{form.tid}}
                 </div>
@@ -286,9 +290,7 @@
             });
           } else {
             $("#id_course").empty();
-            $("#id_course").append(
-              '<option value="">Select a course</option>'
-            );
+            $("#id_course").append('<option value="">Select a course</option>');
           }
         });
       });

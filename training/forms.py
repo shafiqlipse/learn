@@ -21,6 +21,7 @@ class TraineesForm(forms.ModelForm):
             "place",
             "designation",
             "level",
+            "residence_type",
             "tid",
         ]
         widgets = {
@@ -36,6 +37,7 @@ class TraineesForm(forms.ModelForm):
             "designation": forms.Select(attrs={"class": "form-control"}),
             "course": forms.Select(attrs={"class": "form-control"}),
             "district": forms.Select(attrs={"class": "form-control"}),
+            "residence_type": forms.Select(attrs={"class": "form-control"}),
            
             "gender": forms.Select(attrs={"class": "form-control"}),
             "level": forms.Select(attrs={"class": "form-control"}),
