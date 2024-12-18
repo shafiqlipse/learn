@@ -1,0 +1,121 @@
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+}
+* {
+  font-family: "Syne", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  .p_input,
+  select {
+    &:focus {
+      background-color: #fff;
+    }
+    background-color: #fff;
+  }
+}
+$color: rgb(0, 10, 117);
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: $color;
+  text-transform: capitalize;
+  font-weight: 300;
+  font-size: 17px;
+}
+
+
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  @media (max-width: 508px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 508px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 508px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.grid7 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 20px;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 508px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.grid5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 508px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.grid6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 508px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.ad {
+  padding: 10px;
+
+  margin: 20px 0;
+
+  img {
+    width: 50%;
+    border-radius: 20px;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+}
