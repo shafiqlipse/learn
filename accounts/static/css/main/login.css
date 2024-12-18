@@ -2,4 +2,31 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.auth-container {
+  background-image: url(https://e0.pxfuel.com/wallpapers/191/823/desktop-wallpaper-island-nature-landscape-beach-deserted-island-sea-water-and-mobile-background.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.auth-container .carod {
+  width: 80%;
+  padding: 20px;
+  -webkit-backdrop-filter: blur(0.5em);
+          backdrop-filter: blur(0.5em);
+  background-color: rgba(255, 255, 255, 0.0588235294);
+  border-radius: 30px;
+}
+.auth-container .carod .imagebox {
+  flex-direction: column;
+  text-align: center;
+}
+.auth-container .carod .px-5 .foomu .form-group .shurt input {
+  border: 0;
+  outline: none;
 }/*# sourceMappingURL=login.css.map */
