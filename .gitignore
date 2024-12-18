@@ -12,6 +12,5 @@ trainers/migrations/*
 
 # Media and uploaded files (one level up)
 profile/
-
 trainer_photos/
 trainee_photos/
