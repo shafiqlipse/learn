@@ -44,7 +44,7 @@ class Trainee(models.Model):
     contact = models.CharField(max_length=50)
     place = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, null=True, blank=True)
-    tid = models.EmailField(max_length=50, null=True, blank=True)
+    tid = models.CharField(max_length=50, null=True, blank=True)
     district = models.ForeignKey(District, on_delete=models.CASCADE)
     season = models.ForeignKey(Season, on_delete=models.CASCADE,null=True,blank=True)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
