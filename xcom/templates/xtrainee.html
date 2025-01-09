@@ -1,0 +1,67 @@
+{% extends "dashboard/dashboard.html" %}
+
+<!--static-->
+{% block title %}{{xtrainee.fname}} {{xtrainee.lname}}{% endblock %}
+<!--static-->
+{% block head %}
+<title>{{ xtrainee.fname }} {{ xtrainee.lname }}</title>
+<meta property="og:title" content="{{ xtrainee.fname }} {{ xtrainee.lname }}" />
+<meta
+  property="og:description"
+  content="{{ xtrainee.fname }} {{ xtrainee.lname }}"
+/>
+<meta property="og:image" content="{{ xtrainee.photo.url }}" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:type" content="website" />
+{% endblock %}
+
+<!--static-->
+{% load static %}
+<!--khfufufu-->
+{% block content %}
+<div class="athlete-dew content-wrapper">
+  <div class="athlete flex">
+    <div class="img-ath">
+      <img src="{{xtrainee.photo.url}}" alt="" />
+    </div>
+    <div class="line-ath">
+      <h1>{{xtrainee.first_name}} {{xtrainee.last_name}}</h1>
+      <p>{{xtrainee.email}}</p>
+      <hr />
+      <div class="small-details grid3">
+        <span
+          >Phone
+          <h3>{{xtrainee.contact}}</h3></span
+        >
+        <span
+          >Gender
+          <h3>{{xtrainee.gender}}</h3></span
+        >
+        <span
+          >Date of birth
+          <h3>{{xtrainee.date_of_birth}}</h3></span
+        >
+        <span
+          >School/ place of work
+          <h3>{{xtrainee.place}}</h3></span
+        >
+       
+        <span
+          >Venue:
+          <h3>{{xtrainee.venue}}</h3></span
+        >
+
+   
+        <span
+          >Course
+          <h3>{{xtrainee.course}}</h3></span
+        >
+        <span
+          >District
+          <h3>{{xtrainee.district}}</h3></span
+        >
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

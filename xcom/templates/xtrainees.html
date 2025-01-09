@@ -1,0 +1,120 @@
+{% extends "dashboard/dashboard.html" %}
+
+<!--static-->
+{% block title %}XTrainees{% endblock %}
+<!--static-->
+{% load static %}
+<!--khfufufu-->
+{% block content %}
+<div class="schools-dew content-wrapper">
+  <div class="head flex">
+    <h1>capacity building 2024</h1>
+    <div class="others flex">
+      <form method="post" class="form-contol">
+        {% csrf_token %}
+        <input type="submit" name="Accreditation" value="Accreditation" />
+      </form>
+
+      <form method="post" class="form-contol">
+        {% csrf_token %}
+        <input type="submit" name="Certificate" value="Certificate" />
+      </form>
+      <a href="{% url 'export_csv' %}">Export CSV</a>
+    </div>
+  </div>
+  <div class="filter flex">
+    <form method="get" class="formiex flex">
+      <h2>Filter xtrainees</h2>
+      <div method="get" class="formlix flex">
+        <div method="get" class="formix">
+          <div class="form-group flex">
+            <label for="gender">Gender</label>
+            {{ xtrainee_filter.form.gender }}
+          </div>
+
+          <div class="form-group flex">
+            <label for="school">Venue</label>
+            {{ xtrainee_filter.form.venue }}
+          </div>
+          <div class="form-group flex">
+            <label for="school">Discipline</label>
+            {{ xtrainee_filter.form.discipline }}
+          </div>
+          <div class="form-group flex">
+            <label for="school">Course</label>
+            {{ xtrainee_filter.form.course }}
+          </div>
+          <div class="form-group flex">
+            <label for="school">Level</label>
+            {{ xtrainee_filter.form.level }}
+          </div>
+        </div>
+
+        <button type="submit">Apply Filter</button>
+      </div>
+    </form>
+  </div>
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li class="alert alert-{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <div class="filterlist card">
+    <div class="official-list">
+      <table id="myTable" class="display">
+        <thead>
+          <tr>
+            <th>Entry date</th>
+            <th>Names</th>
+
+            <th>Venue</th>
+            <th>Discipline</th>
+            <th>Course</th>
+            <th>Level</th>
+            <th>Deactivate</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for xtrainees in xtrainee_filter.qs %}
+          <tr>
+            <td>{{xtrainees.entry_date}}</td>
+            <td>
+              <a href="{% url 'xtrainee' xtrainees.id%}"
+                >{{xtrainees.first_name}} {{xtrainees.last_name}}</a
+              >
+            </td>
+            <td>{{xtrainees.venue}}</td>
+            <td>{{xtrainees.discipline}}</td>
+            <td>{{xtrainees.course}}</td>
+            <td>{{xtrainees.level}}</td>
+
+            <td>
+              {% if xtrainees.status == 'Active' %}
+              <span>{{xtrainees.status}}</span> {% else %}
+              <a
+                href="{% url 'activate_xtrainee' xtrainees.id%}"
+                class="btn btn-danger"
+                >Activate</a
+              >
+
+              {% endif %}
+            </td>
+
+            <td><a href="{%url 'update_xtrainee' xtrainees.id %}">Edit</a></td>
+            <td>
+              <a href="{%url 'delete_xtrainee' xtrainees.id %}">delete</a>
+            </td>
+          </tr>
+
+          {%endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

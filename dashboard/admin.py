@@ -1,13 +1,17 @@
 from django.contrib import admin
 from accounts.models import *
 from training.models import *
+from xcom.models import *
 
 # Register your models here.
 admin.site.register(User)
 admin.site.register(Trainee)
+admin.site.register(XTrainee)
 admin.site.register(Season)
 admin.site.register(Course)
+admin.site.register(XCourse)
 admin.site.register(Venue)
+admin.site.register(XVenue)
 admin.site.register(Level)
 admin.site.register(District)
 
