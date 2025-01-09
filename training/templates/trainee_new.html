@@ -84,6 +84,12 @@
         <div class="hedtxt">
           <h2>USSSA CAPACITY BUILDING 2024</h2>
         </div>
+        <div aria-live="polite" aria-atomic="true" style="position: relative">
+          <div
+            id="toast-container"
+            style="position: absolute; top: 20px; right: 20px"
+          ></div>
+        </div>
       </div>
       <div class="img">
         <img src="{% static 'img/CB.png'%}" alt="" />
@@ -97,12 +103,7 @@
         {% csrf_token %}
 
         <div class="schooled">
-          <div aria-live="polite" aria-atomic="true" style="position: relative">
-            <div
-              id="toast-container"
-              style="position: absolute; top: 20px; right: 20px"
-            ></div>
-          </div>
+        
           <div class="fields">
             {{ cform.non_field_errors }} {{ cform.errors }}
             <!---->

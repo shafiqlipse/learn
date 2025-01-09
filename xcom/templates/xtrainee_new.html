@@ -79,9 +79,15 @@
       }
     </style>
     <div class="schooler">
-      <div class="top">
+      <div class="top" style="position: RELATIVE; z-index: 9999">
         <div class="hedEtxt">
           <h2>USSSA SPORTS ADMINISTRATION & MANAGEMENT COURSE</h2>
+        </div>
+        <div aria-live="polite" aria-atomic="true" style="position: relative">
+          <div
+            id="toast-container"
+            style="position: absolute; top: 20px; right: 20px"
+          ></div>
         </div>
       </div>
       <form
@@ -172,7 +178,26 @@
       </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        {% for message in messages %}
+        const toast = document.createElement("div");
+        toast.className = "toast show align-items-center text-white bg-{{ message.tags }} border-0";
+        toast.setAttribute("role", "alert");
+        toast.setAttribute("aria-live", "assertive");
+        toast.setAttribute("aria-atomic", "true");
+        toast.innerHTML = `
+          <div class="d-flex">
+            <div class="toast-body">
 
+              {{ message|escapejs }}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>`;
+        document.getElementById("toast-container").appendChild(toast);
+      {% endfor %}
+      });
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <script src="{% static 'js/opper.js' %}"></script>
     <script

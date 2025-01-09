@@ -40,7 +40,7 @@ def xtrainee_add(request):
                 new_xtrainee.save()
                 messages.success(
                     request,
-                    "Registered successfully! PAY TO SECURE YOUR PLACE",
+                    "Registered successfully! ",
                 )
                 return redirect("addxtrainee")
 
