@@ -6,6 +6,7 @@ accounts/migrations/*
 dashboard/migrations/*
 resources/migrations/*
 training/migrations/*
+xcom/migrations/*
 trainers/migrations/*
 
 
