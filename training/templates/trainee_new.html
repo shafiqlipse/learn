@@ -80,9 +80,9 @@
     </style>
     <div class="schooler">
       <div class="top">
-        <img src="{% static 'images/logo.png' %}" id="dw" alt="No Photo" />
+        <img src="{% static 'img/logo.png' %}" id="dw" alt="No Photo" />
         <div class="hedtxt">
-          <h2>USSSA CAPACITY BUILDING 2024</h2>
+          <h2>USSSA CAPACITY BUILDING 2025</h2>
         </div>
         <div aria-live="polite" aria-atomic="true" style="position: relative">
           <div
@@ -91,9 +91,7 @@
           ></div>
         </div>
       </div>
-      <div class="img">
-        <img src="{% static 'img/CB.png'%}" alt="" />
-      </div>
+
       <form
         action=""
         method="POST"
@@ -103,19 +101,9 @@
         {% csrf_token %}
 
         <div class="schooled">
-        
           <div class="fields">
             {{ cform.non_field_errors }} {{ cform.errors }}
             <!---->
-            {% comment %} {% if messages %}
-            <script>
-              document.addEventListener("DOMContentLoaded", function () {
-                {% for message in messages %}
-                alert("{{ message|escapejs }}");
-                {% endfor %}
-              });
-            </script>
-            {% endif %} {% endcomment %}
 
             <div class="left flex">
               <div class="imgbox">
