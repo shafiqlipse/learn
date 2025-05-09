@@ -20,7 +20,7 @@ class XTraineeFilter(django_filters.FilterSet):
         field_name="entry_date",
         label="Entry Date (Range)",
         widget=django_filters.widgets.RangeWidget(
-            attrs={"type": "date", "class": "date-input"}
+            attrs={"type": "date", "class": "date-input form-control"}
         ),
     )
 

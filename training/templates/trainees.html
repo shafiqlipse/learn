@@ -23,34 +23,34 @@
     </div>
   </div>
   <div class="filter flex">
-    <form method="get" class="formiex flex">
+    <form method="get" class="form-control p-2 flex">
       <h2>Filter trainees</h2>
       <div method="get" class="formlix flex">
-        <div method="get" class="formix">
-          <div class="form-group flex">
+        <div method="get" class="grid3">
+          <div class="form-group">
             <label for="gender">Gender</label>
             {{ trainee_filter.form.gender }}
           </div>
 
-          <div class="form-group flex">
+          <div class="form-group">
             <label for="school">Venue</label>
             {{ trainee_filter.form.venue }}
           </div>
-          <div class="form-group flex">
-            <label for="school">Discipline</label>
-            {{ trainee_filter.form.discipline }}
-          </div>
-          <div class="form-group flex">
+          <div class="form-group">
             <label for="school">Course</label>
             {{ trainee_filter.form.course }}
           </div>
-          <div class="form-group flex">
+          <div class="form-group">
             <label for="school">Level</label>
             {{ trainee_filter.form.level }}
           </div>
+          <div class="form-group">
+            <label for="school">Date</label>
+            {{ trainee_filter.form.entry_date }}
+          </div>
         </div>
 
-        <button type="submit">Apply Filter</button>
+        <button type="submit" class='btn btn-primary'>Apply Filter</button>
       </div>
     </form>
   </div>
