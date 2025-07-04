@@ -15,44 +15,44 @@ from django.http import JsonResponse
 
 
 
-def get_venues(request):
-    season_id = request.GET.get("season_id")  # Get the selected season ID from the request
-    if season_id:
-        try:
-            season = Season.objects.get(id=season_id)  # Retrieve the season instance
-            venues = season.venue_set.values(
-                "id", "name"
-            )  # Get related venues
-            return JsonResponse(list(venues), safe=False)
-        except Season.DoesNotExist:
-            return JsonResponse({"error": "Season not found"}, status=404)
-    return JsonResponse([], safe=False)
+# def get_venues(request):
+#     season_id = request.GET.get("season_id")  # Get the selected season ID from the request
+#     if season_id:
+#         try:
+#             season = Season.objects.get(id=season_id)  # Retrieve the season instance
+#             venues = season.venue_set.values(
+#                 "id", "name"
+#             )  # Get related venues
+#             return JsonResponse(list(venues), safe=False)
+#         except Season.DoesNotExist:
+#             return JsonResponse({"error": "Season not found"}, status=404)
+#     return JsonResponse([], safe=False)
 
-def get_courses(request):
-    venue_id = request.GET.get("venue_id")  # Get the selected venue ID from the request
-    if venue_id:
-        try:
-            venue = Venue.objects.get(id=venue_id)  # Retrieve the venue instance
-            courses = venue.course_set.values(
-                "id", "name"
-            )  # Get related courses
-            return JsonResponse(list(courses), safe=False)
-        except Venue.DoesNotExist:
-            return JsonResponse({"error": "COurse not found"}, status=404)
-    return JsonResponse([], safe=False)
+# def get_courses(request):
+#     venue_id = request.GET.get("venue_id")  # Get the selected venue ID from the request
+#     if venue_id:
+#         try:
+#             venue = CVenue.objects.get(id=venue_id)  # Retrieve the venue instance
+#             courses = venue.course_set.values(
+#                 "id", "name"
+#             )  # Get related courses
+#             return JsonResponse(list(courses), safe=False)
+#         except CVenue.DoesNotExist:
+#             return JsonResponse({"error": "COurse not found"}, status=404)
+#     return JsonResponse([], safe=False)
 
-def get_level(request):
-    course_id = request.GET.get("course_id")  # Get the selected course ID from the request
-    if course_id:
-        try:
-            courses = Course.objects.get(id=course_id)  # Retrieve the course instance
-            levels = courses.level_set.values(
-                "id", "name"
-            )  # Get related disciplines
-            return JsonResponse(list(levels), safe=False)
-        except Venue.DoesNotExist:
-            return JsonResponse({"error": "Level not found"}, status=404)
-    return JsonResponse([], safe=False)
+# def get_level(request):
+#     course_id = request.GET.get("course_id")  # Get the selected course ID from the request
+#     if course_id:
+#         try:
+#             courses = Course.objects.get(id=course_id)  # Retrieve the course instance
+#             levels = courses.level_set.values(
+#                 "id", "name"
+#             )  # Get related disciplines
+#             return JsonResponse(list(levels), safe=False)
+#         except Venue.DoesNotExist:
+#             return JsonResponse({"error": "Level not found"}, status=404)
+#     return JsonResponse([], safe=False)
 
 
 def champie_add(request):

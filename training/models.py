@@ -8,7 +8,7 @@ class Season(models.Model):
     name = models.CharField(max_length=50)
     start_date = models.DateField()
     year = models.IntegerField()
-    status = models.CharField( choices=[("Active", "Active"), ("Inactive", "Inactive")], max_length=10, default="Active" ,null=True, blank=True)
+    # status = models.CharField( choices=[("Active", "Active"), ("Inactive", "Inactive")], max_length=10, default="Active" ,null=True, blank=True)
 
     def __str__(self):
         return self.name
