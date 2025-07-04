@@ -14,7 +14,7 @@ class Championship(models.Model):
         return self.name
 
 
-class Venue(models.Model):
+class CVenue(models.Model):
     name = models.CharField(max_length=50)
     venue = models.ManyToManyField(Championship, related_name='venues', blank=True)
     def __str__(self):
@@ -30,7 +30,7 @@ class Champie(models.Model):
     contact = models.CharField(max_length=50)
     place = models.CharField(max_length=50)
     championship = models.ForeignKey(Championship, on_delete=models.CASCADE,null=True,blank=True)
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+    venue = models.ForeignKey(CVenue, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
     date_of_birth = models.DateField()

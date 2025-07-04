@@ -2,7 +2,7 @@ import django_filters
 from django import forms
 from django_filters import DateFromToRangeFilter
 from django_filters.widgets import RangeWidget
-from .models import Champie, Level, Venue, Course  # adjust as necessary
+from .models import Champie, Level, CVenue, Course  # adjust as necessary
 
 
 class DateInput(forms.DateInput):
@@ -23,7 +23,7 @@ class ChampieFilter(django_filters.FilterSet):
     )
 
     venue = django_filters.ModelChoiceFilter(
-        queryset=Venue.objects.all(),
+        queryset=CVenue.objects.all(),
         label="Venue",
         widget=forms.Select(attrs={"class": "form-control"})
     )

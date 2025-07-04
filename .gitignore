@@ -8,6 +8,7 @@ resources/migrations/*
 training/migrations/*
 xcom/migrations/*
 trainers/migrations/*
+championship/migrations/*
 
 
 
@@ -15,3 +16,4 @@ trainers/migrations/*
 profile/
 trainer_photos/
 trainee_photos/
+champie_photos/
