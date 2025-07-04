@@ -1,0 +1,67 @@
+{% extends "dashboard/dashboard.html" %}
+
+<!--static-->
+{% block title %}{{champie.fname}} {{champie.lname}}{% endblock %}
+<!--static-->
+{% block head %}
+<title>{{ champie.fname }} {{ champie.lname }}</title>
+<meta property="og:title" content="{{ champie.fname }} {{ champie.lname }}" />
+<meta
+  property="og:description"
+  content="{{ champie.fname }} {{ champie.lname }}"
+/>
+<meta property="og:image" content="{{ champie.photo.url }}" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:type" content="website" />
+{% endblock %}
+
+<!--static-->
+{% load static %}
+<!--khfufufu-->
+{% block content %}
+<div class="athlete-dew content-wrapper">
+  <div class="athlete flex">
+    <div class="img-ath">
+      <img src="{{champie.photo.url}}" alt="" />
+    </div>
+    <div class="line-ath">
+      <h1>{{champie.first_name}} {{champie.last_name}}</h1>
+      <p>{{champie.email}}</p>
+      <hr />
+      <div class="small-details grid3">
+        <span
+          >Phone
+          <h3>{{champie.contact}}</h3></span
+        >
+        <span
+          >Gender
+          <h3>{{champie.gender}}</h3></span
+        >
+        <span
+          >Date of birth
+          <h3>{{champie.date_of_birth}}</h3></span
+        >
+        <span
+          >School/ place of work
+          <h3>{{champie.place}}</h3></span
+        >
+        <span
+          >Designation
+          <h3>{{champie.designation}}</h3></span
+        >
+        <span
+          >Venue:
+          <h3>{{champie.venue}}</h3></span
+        >
+
+
+        <span
+          >Course
+          <h3>{{champie.course}}</h3></span
+        >
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

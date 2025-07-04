@@ -2,6 +2,7 @@ from django.contrib import admin
 from accounts.models import *
 from training.models import *
 from xcom.models import *
+from championship.models import *
 
 
 class TraineeAdmin(admin.ModelAdmin):  # Inherit from admin.ModelAdmin
@@ -19,9 +20,8 @@ admin.site.register(Venue)
 admin.site.register(XVenue)
 admin.site.register(Level)
 admin.site.register(District)
-
-# # admin.site.register(School)
-# # admin.site.register(City)
+admin.site.register(Championship)
+admin.site.register(Champie)
 # admin.site.register(Zone)
 # # admin.site.register(Classroom)
 # # admin.site.register(TOfficer)
