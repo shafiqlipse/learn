@@ -1,0 +1,94 @@
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accreditation</title>
+  </head>
+
+  <body>
+    <style>
+      @media print {
+        @page {
+          size: A4 portrait;
+          margin: 0;
+        }
+
+        header {
+          margin: 0;
+          padding: 0;
+        }
+      }
+      .header .athletes table tbody tr td table tr .td {
+        padding-top: 100px;
+        padding-bottom: 110px;
+        margin-left: 60px;
+        margin-right: 30px;
+      }
+      .header .athletes table tbody tr td table tr td img {
+        width: 110px;
+        margin-right: -30px;
+      }
+      .header .athletes table tbody tr td table tr .td .deas {
+        font-size: 15px;
+      }
+      .header .athletes table tbody tr td table tr .td .pos {
+        color: blue;
+      }
+    </style>
+    <div class="header">
+      <div class="athletes">
+        <table>
+          <tbody>
+            {% for athlete in alldelegates %}
+            <!---->
+            {% if forloop.counter0|divisibleby:2 %}
+            <!-- Start a new row for every even-numbered athlete -->
+            <tr>
+              {% endif %}
+              <td>
+                <table>
+                  <tr>
+                    <td class="td">
+                      <span class="deas"
+                        ><strong
+                          >{{ athlete.first_name|upper }}
+                          {{athlete.last_name|upper }}</strong
+                        >
+                      </span>
+                      <br />
+
+                      <span class="des"
+                        >{{ athlete.zone|upper }} |
+                        {{athlete.district|upper}}</span
+                      ><br />
+                      <span class="pos"
+                        ><strong>{{ athlete.position|upper }}</strong></span
+                      >
+                    </td>
+                    <td class="atd">
+                      {% if athlete.photo %}
+                      <img
+                        src="{{ athlete.photo.path }}"
+                        alt="{{ athlete.first_name }}"
+                      />
+                      {% else %}
+                      <img
+                        src="{% static 'images/profile.png' %}"
+                        alt="{{ athlete.last_name }}"
+                      />
+                      {% endif %}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              {% if forloop.last or forloop.counter0|add:1|divisibleby:2 %}
+              <!-- End the row for the last or odd-numbered athlete -->
+            </tr>
+            {% endif %} {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
