@@ -74,7 +74,7 @@ def champie_add(request):
                         new_champie.photo = data  # Assign cropped image
                     except (ValueError, TypeError):
                         messages.error(request, "Invalid image data.")
-                        return render(request, "champie_new.html", {"form": form})
+                        return render(request, "champies/champie_new.html", {"form": form})
 
                 new_champie.save()
                 messages.success(
@@ -85,13 +85,13 @@ def champie_add(request):
 
             except IntegrityError:
                 messages.error(request, "There was an error saving the champie.")
-                return render(request, "champie_new.html", {"form": form})
+                return render(request, "champies/champie_new.html", {"form": form})
 
     else:
         form = ChampiesForm()
 
     context = {"form": form}
-    return render(request, "champie_new.html", context)
+    return render(request, "champies/champie_new.html", context)
 
 
 from django.http import HttpResponse
@@ -115,11 +115,11 @@ def champies(request):
     if request.method == "POST":
         # Check which form was submitted
         if "Accreditation" in request.POST:
-            template = get_template("acrred.html")
+            template = get_template("champies/acrred.html")
             filename = "Champie_Accreditation.pdf"
         elif "Certificate" in request.POST:
             template = get_template(
-                "certficate_temaplate.html"
+                "champies/certficate_temaplate.html"
             )  # Your certificate template
             filename = "Champie_Certificate.pdf"
         else:
@@ -147,7 +147,7 @@ def champies(request):
         # Render the filter form
         return render(
             request,
-            "champies.html",
+            "champies/champies.html",
             {"champie_filter": champie_filter},
         )
 
@@ -156,7 +156,7 @@ def champie_details(request, id):
     champie = Champie.objects.get(id=id)
 
     context = {"champie": champie}
-    return render(request, "champie.html", context)
+    return render(request, "champies/champie.html", context)
 
 
 def champie_update(request, id):
@@ -179,7 +179,7 @@ def champie_update(request, id):
                         new_champie.photo = data  # Assign cropped image
                     except (ValueError, TypeError):
                         messages.error(request, "Invalid image data.")
-                        return render(request, "champie_new.html", {"form": form})
+                        return render(request, "champies/champie_new.html", {"form": form})
 
                 new_champie.save()
                 messages.success(
@@ -190,7 +190,7 @@ def champie_update(request, id):
 
             except IntegrityError:
                 messages.error(request, "There was an error saving the champie.")
-                return render(request, "champie_new.html", {"form": form})
+                return render(request, "champies/champie_new.html", {"form": form})
 
     else:
         form = ChampiesForm(instance=champie)
@@ -199,7 +199,7 @@ def champie_update(request, id):
         "form": form,
         "champie": champie,
     }
-    return render(request, "update_champie.html", context)
+    return render(request, "champies/update_champie.html", context)
 
 
 def champie_delete(request, id):
@@ -208,7 +208,7 @@ def champie_delete(request, id):
         stud.delete()
         return redirect("champies")
 
-    return render(request, "delete_champie.html", {"obj": stud})
+    return render(request, "champies/delete_champie.html", {"obj": stud})
 
 
 import csv
@@ -247,7 +247,6 @@ def export_csv(request):
                 obj.last_name,
                 obj.place,
                 obj.contact,
-                obj.district,
                 obj.venue,
                 obj.course,
                 obj.level,
