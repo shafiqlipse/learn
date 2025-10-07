@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import District
+from dashboard.models import District
 
 class XVenue(models.Model):
     name = models.CharField(max_length=50)

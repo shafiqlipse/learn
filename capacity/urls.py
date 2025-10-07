@@ -5,8 +5,8 @@ from django.contrib import admin
 from django.urls import path
 from dashboard.views import *
 from accounts.views import *
-from training.views import *
-from trainers.views import *
+# from training.views import *
+# from trainers.views import *
 
 
 
@@ -19,8 +19,8 @@ urlpatterns = [
     path("auth/", include("accounts.urls")),
     path("training/", include("training.urls")),
     path("xtraining/", include("xcom.urls")),
-    path("trainers/", include("trainers.urls")),
+    # path("trainers/", include("trainers.urls")),
     path("championship/", include("championship.urls")),
-    path("resources/", include("resources.urls")),
+    # path("resources/", include("resources.urls")),
     path("agm/", include("agm.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

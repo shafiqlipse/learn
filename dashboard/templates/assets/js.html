@@ -1,0 +1,63 @@
+{% load static %}
+
+<!-- END wrapper -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<!-- Vendor -->
+
+<script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'js/iconify-icon.min.js'%}"></script>
+<script src="{% static 'js/simplebar.min.js'%}"></script>
+<script src="{% static 'js/waves.min.js'%}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js'%}"></script>
+<script src="{% static 'js/jquery.counterup.min.js'%}"></script>
+<script src="{% static 'js/feather.min.js'%}"></script>
+
+<!-- Apexcharts JS -->
+<script src="{% static 'js/apexcharts.min.js'%}"></script>
+
+<!-- Vector map-->
+<script src="{% static 'js/jsvectormap.min.js'%}"></script>
+<script src="{% static 'js/world-merc.js'%}"></script>
+
+<!-- Widgets Init Js -->
+<script src="{% static 'js/crm-dashboard.init.js'%}"></script>
+
+<!-- App js-->
+<script src="{% static 'js/app.js'%}"></script>
+
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#schools").DataTable();
+  });
+</script>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $(".js-example-basic-multiple-name").select2({
+      placeholder: "Select courses names",
+      allowClear: true,
+    });
+  });
+  $("#id_courses").select2({
+    dropdownParent: $("#venuesModalLabel"),
+  });
+  
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+</script>

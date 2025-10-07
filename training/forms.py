@@ -22,7 +22,8 @@ class TraineesForm(forms.ModelForm):
             "designation",
             "level",
             "residence_type",
-            "tid",
+            "phone_number",
+           
         ]
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
@@ -35,17 +36,17 @@ class TraineesForm(forms.ModelForm):
             "school": forms.TextInput(attrs={"class": "form-control"}),
             "contact": forms.TextInput(attrs={"class": "form-control"}),
             "email": forms.TextInput(attrs={"class": "form-control"}),
-            "place": forms.TextInput(attrs={"class": "form-control"}),
-            "tid": forms.NumberInput(attrs={"class": "form-control"}),
+            "place": forms.TextInput(attrs={"class": "form-control"}),         
             "venue": forms.Select(attrs={"class": "form-control"}),
             "season": forms.Select(attrs={"class": "form-control"}),
             "designation": forms.Select(attrs={"class": "form-control"}),
             "course": forms.Select(attrs={"class": "form-control"}),
-            "district": forms.Select(attrs={"class": "form-control"}),
+            "district": forms.Select(attrs={"class": "form-control js-example-basic-single"}),
             "residence_type": forms.Select(attrs={"class": "form-control"}),
-           
+            "photo": forms.FileInput(attrs={"class": "form-control"}),
             "gender": forms.Select(attrs={"class": "form-control"}),
             "level": forms.Select(attrs={"class": "form-control"}),
+            "phone_number": forms.TextInput(attrs={"class": "form-control"}),
             "date_of_birth": forms.DateInput(
                 attrs={"type": "date", "class": "form-control"}
             ),

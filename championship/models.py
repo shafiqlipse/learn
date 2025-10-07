@@ -1,6 +1,6 @@
 from django.db import models
-from accounts.models import District
-from training.models import Season, Course, Level
+from dashboard.models import District
+from training.models import Course, Level
 # Create your models here.
 
 

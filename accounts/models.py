@@ -13,23 +13,3 @@ class User(AbstractUser):
     thumbnail = models.ImageField(upload_to="profile/", blank=True, null=True)
 
 
-
-class District(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class Venue(models.Model):
-    name = models.CharField(max_length=100)
-    district = models.ForeignKey(District, on_delete=models.CASCADE)
-    status = models.CharField(
-        max_length=10,
-        choices=[("Active", "Active"), ("Inactive", "Inactive")],
-        default="Inactive",
-    )
-
-    def __str__(self):
-        return self.name
-

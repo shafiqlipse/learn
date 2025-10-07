@@ -1,732 +1,923 @@
 <!DOCTYPE html>
-<html lang="en">
-  {% load static %}
-  <head>
+{% load static %}
+<head>
+
     <meta charset="utf-8" />
+    <title>Dashboard | {% block title%}{%endblock%}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc."/>
+    <meta name="author" content="Zoyothemes"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta
-      name="description"
-      content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5"
-    />
-    <meta name="author" content="AdminKit" />
-    <meta
-      name="keywords"
-      content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web"
-    />
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link rel="shortcut icon" href="{% static 'img/logo.png'%}" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'img/logo.png'%}">
 
-    <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+    <!-- App css -->
 
-    <title>USSSA | {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/main/main.css'%}" />
-    <link href="{% static 'css/app.css'%}" rel="stylesheet" />
-    <link href="{% static 'css/athlete/athletedetail.css'%}" rel="stylesheet" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.datatables.net/v/dt/dt-2.0.1/datatables.min.css"
-      rel="stylesheet"
-    />
-  </head>
+    {% include "assets/css.html" %}
+</head>
 
-  <body>
-    <div class="wrapper">
-      <nav id="sidebar" class="sidebar js-sidebar">
-        <div class="sidebar-content js-simplebar">
-          <a class="sidebar-brand" href="index.html">
-            <span class="align-middle">Capacity Building</span>
-          </a>
+  <body data-menu-color="dark" data-sidebar="default">
+    <!-- Begin page -->
+    <div id="app-layout">
+      <!-- Topbar Start -->
+      <div class="topbar-custom">
+        <div class="container-fluid">
+          <div class="d-flex justify-content-between">
+            <ul
+              class="list-unstyled topnav-menu mb-0 d-flex align-items-center"
+            >
+              <li>
+                <button class="button-toggle-menu nav-link">
+                  <i data-feather="menu" class="noti-icon"></i>
+                </button>
+              </li>
+              <li class="d-none d-lg-block">
+                <form class="app-search d-none d-md-block me-auto">
+                  <div class="position-relative topbar-search">
+                    <input
+                      type="text"
+                      class="form-control ps-4"
+                      placeholder="Search..."
+                    />
+                    <iconify-icon
+                      icon="solar:minimalistic-magnifer-outline"
+                      class="align-middle fs-14 position-absolute text-muted top-50 translate-middle-y ms-2"
+                    ></iconify-icon>
+                  </div>
+                </form>
+              </li>
+            </ul>
 
-          <ul class="sidebar-nav">
-            <li class="sidebar-header">Pages</li>
+            <ul
+              class="list-unstyled topnav-menu mb-0 d-flex align-items-center"
+            >
+    
 
-            <li class="sidebar-item active">
-              <a class="sidebar-link" href="index.html">
-                <i class="align-middle" data-feather="sliders"></i>
-                <span class="align-middle">Dashboard</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{%url 'trainees'%}">
-                <i class="align-middle" data-feather="user"></i>
-                <span class="align-middle">Trainees</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{%url 'xtrainees'%}">
-                <i class="align-middle" data-feather="users"></i>
-                <span class="align-middle">X-Trainees</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{% url 'champies'%}">
-                <i class="align-middle" data-feather="log-in"></i>
-                <span class="align-middle">Tororo</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="pages-sign-up.html">
-                <i class="align-middle" data-feather="user-plus"></i>
-                <span class="align-middle">Sign Up</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="pages-blank.html">
-                <i class="align-middle" data-feather="book"></i>
-                <span class="align-middle">Blank</span>
-              </a>
-            </li>
-
-            <li class="sidebar-header">Tools & Components</li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="ui-buttons.html">
-                <i class="align-middle" data-feather="square"></i>
-                <span class="align-middle">Buttons</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="ui-forms.html">
-                <i class="align-middle" data-feather="check-square"></i>
-                <span class="align-middle">Forms</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="ui-cards.html">
-                <i class="align-middle" data-feather="grid"></i>
-                <span class="align-middle">Cards</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="ui-typography.html">
-                <i class="align-middle" data-feather="align-left"></i>
-                <span class="align-middle">Typography</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="icons-feather.html">
-                <i class="align-middle" data-feather="coffee"></i>
-                <span class="align-middle">Icons</span>
-              </a>
-            </li>
-
-            <li class="sidebar-header">Plugins & Addons</li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="charts-chartjs.html">
-                <i class="align-middle" data-feather="bar-chart-2"></i>
-                <span class="align-middle">Charts</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="maps-google.html">
-                <i class="align-middle" data-feather="map"></i>
-                <span class="align-middle">Maps</span>
-              </a>
-            </li>
-          </ul>
-
-          <div class="sidebar-cta">
-            <div class="sidebar-cta-content">
-              <strong class="d-inline-block mb-2">Upgrade to Pro</strong>
-              <div class="mb-3 text-sm">
-                Are you looking for more components? Check out our premium
-                version.
-              </div>
-              <div class="d-grid">
-                <a href="upgrade-to-pro.html" class="btn btn-primary"
-                  >Upgrade to Pro</a
+              <!-- Button Trigger Customizer Offcanvas -->
+              <li class="d-none d-sm-flex">
+                <button
+                  type="button"
+                  class="btn nav-link"
+                  data-toggle="fullscreen"
                 >
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+                  <iconify-icon
+                    icon="solar:minimize-square-outline"
+                    class="fs-24 align-middle"
+                  ></iconify-icon>
+                </button>
+              </li>
 
-      <div class="main">
-        <nav class="navbar navbar-expand navbar-light navbar-bg">
-          <a class="sidebar-toggle js-sidebar-toggle">
-            <i class="hamburger align-self-center"></i>
-          </a>
+              <!-- Light/Dark Mode Button Themes -->
+              <li class="d-none d-sm-flex">
+                <button type="button" class="btn nav-link" id="light-dark-mode">
+                  <iconify-icon
+                    icon="solar:moon-outline"
+                    class="fs-24 align-middle dark-mode"
+                  ></iconify-icon>
+                  <iconify-icon
+                    icon="solar:sun-2-outline"
+                    class="fs-24 align-middle light-mode"
+                  ></iconify-icon>
+                </button>
+              </li>
 
-          <div class="navbar-collapse collapse">
-            <ul class="navbar-nav navbar-align">
-              <li class="nav-item dropdown">
+              <li class="dropdown notification-list topbar-dropdown">
                 <a
-                  class="nav-icon dropdown-toggle"
-                  href="#"
-                  id="alertsDropdown"
+                  class="nav-link dropdown-toggle"
                   data-bs-toggle="dropdown"
+                  href="#"
+                  role="button"
+                  aria-haspopup="false"
+                  aria-expanded="false"
                 >
-                  <div class="position-relative">
-                    <i class="align-middle" data-feather="bell"></i>
-                    <span class="indicator">4</span>
-                  </div>
+                  <iconify-icon
+                    icon="solar:bell-bing-outline"
+                    class="fs-24 align-middle light-mode"
+                  ></iconify-icon>
+                  <span class="badge bg-danger rounded-circle noti-icon-badge"
+                    >9</span
+                  >
                 </a>
-                <div
-                  class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
-                  aria-labelledby="alertsDropdown"
-                >
-                  <div class="dropdown-menu-header">4 New Notifications</div>
-                  <div class="list-group">
-                    <a href="#" class="list-group-item">
-                      <div class="row g-0 align-items-center">
-                        <div class="col-2">
-                          <i
-                            class="text-danger"
-                            data-feather="alert-circle"
-                          ></i>
+                <div class="dropdown-menu dropdown-menu-end dropdown-lg">
+                  <!-- item-->
+                  <div class="dropdown-item noti-title">
+                    <h5 class="m-0 fs-16 fw-semibold">
+                      <span class="float-end"
+                        ><a href="javascript:void(0);" class="text-dark fs-14"
+                          ><small class="text-primary"
+                            >Make all as read</small
+                          ></a
+                        ></span
+                      >Notification
+                    </h5>
+                  </div>
+
+                  <div class="noti-scroll" data-simplebar>
+                    <!-- item-->
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item notify-item text-muted link-primary"
+                    >
+                      <div class="d-flex align-items-center">
+                        <div class="notify-icon">
+                          <img
+                            src="{% static 'img/profile.png'%}"
+                            class="img-fluid rounded-circle"
+                            alt=""
+                          />
                         </div>
-                        <div class="col-10">
-                          <div class="text-dark">Update completed</div>
-                          <div class="text-muted small mt-1">
-                            Restart server 12 to complete the update.
+                        <div class="flex-grow-1">
+                          <div
+                            class="d-flex align-items-center justify-content-between mb-1"
+                          >
+                            <p class="notify-details mb-0">Carl Steadham</p>
+                            <iconify-icon
+                              icon="solar:record-bold"
+                              class="fs-12 text-primary align-middle light-mode"
+                            ></iconify-icon>
                           </div>
-                          <div class="text-muted small mt-1">30m ago</div>
+                          <div
+                            class="d-flex align-items-center justify-content-between"
+                          >
+                            <p class="text-muted mb-0">Thursday 4:20pm</p>
+                            <p class="text-muted mb-0">2 hours ago</p>
+                          </div>
                         </div>
                       </div>
                     </a>
-                    <a href="#" class="list-group-item">
-                      <div class="row g-0 align-items-center">
-                        <div class="col-2">
-                          <i class="text-warning" data-feather="bell"></i>
+
+                    <!-- item-->
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item notify-item text-muted link-primary"
+                    >
+                      <div class="d-flex align-items-start">
+                        <div class="notify-icon">
+                          <img
+                            src="{% static 'img/profile.png'%}"
+                            class="img-fluid rounded-circle"
+                            alt=""
+                          />
                         </div>
-                        <div class="col-10">
-                          <div class="text-dark">Lorem ipsum</div>
-                          <div class="text-muted small mt-1">
-                            Aliquam ex eros, imperdiet vulputate hendrerit et.
+                        <div class="flex-grow-1">
+                          <div
+                            class="d-flex align-items-center justify-content-between mb-1"
+                          >
+                            <p class="notify-details mb-0">Carl Steadham</p>
+                            <iconify-icon
+                              icon="solar:record-bold"
+                              class="fs-12 text-primary align-middle light-mode"
+                            ></iconify-icon>
                           </div>
-                          <div class="text-muted small mt-1">2h ago</div>
+                          <div
+                            class="d-flex align-items-center justify-content-between mb-1"
+                          >
+                            <p class="text-muted mb-0">Thursday 4:00pm</p>
+                            <p class="text-muted mb-0">1 hours ago</p>
+                          </div>
+                          <div class="p-2 rounded-2 bg-light">
+                            <p class="text-dark mb-0">
+                              Love the background on this! <br />
+                              Would love to learn
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </a>
-                    <a href="#" class="list-group-item">
-                      <div class="row g-0 align-items-center">
-                        <div class="col-2">
-                          <i class="text-primary" data-feather="home"></i>
+
+                    <!-- item-->
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item notify-item text-muted link-primary"
+                    >
+                      <div class="d-flex align-items-center">
+                        <div class="notify-icon">
+                          <img
+                            src="{% static 'img/profile.png'%}"
+                            class="img-fluid rounded-circle"
+                            alt=""
+                          />
                         </div>
-                        <div class="col-10">
-                          <div class="text-dark">Login from 192.186.1.8</div>
-                          <div class="text-muted small mt-1">5h ago</div>
+                        <div class="flex-grow-1">
+                          <div
+                            class="d-flex align-items-center justify-content-between mb-1"
+                          >
+                            <p class="notify-details mb-0">Eleanor Mac</p>
+                            <iconify-icon
+                              icon="solar:record-bold"
+                              class="fs-12 text-primary align-middle light-mode"
+                            ></iconify-icon>
+                          </div>
+                          <div
+                            class="d-flex align-items-center justify-content-between"
+                          >
+                            <p class="text-muted mb-0">Thursday 3:20pm</p>
+                            <p class="text-muted mb-0">3 hours ago</p>
+                          </div>
                         </div>
                       </div>
                     </a>
-                    <a href="#" class="list-group-item">
-                      <div class="row g-0 align-items-center">
-                        <div class="col-2">
-                          <i class="text-success" data-feather="user-plus"></i>
+
+                    <!-- item-->
+                    <a
+                      href="javascript:void(0);"
+                      class="dropdown-item notify-item text-muted link-primary"
+                    >
+                      <div class="d-flex align-items-start">
+                        <div class="notify-icon">
+                          <img
+                            src="{% static 'img/profile.png'%}"
+                            class="img-fluid rounded-circle"
+                            alt=""
+                          />
                         </div>
-                        <div class="col-10">
-                          <div class="text-dark">New connection</div>
-                          <div class="text-muted small mt-1">
-                            Christina accepted your request.
+                        <div class="flex-grow-1">
+                          <div
+                            class="d-flex align-items-center justify-content-between mb-1"
+                          >
+                            <p class="notify-details mb-0">Ollie diggs</p>
+                            <iconify-icon
+                              icon="solar:record-bold"
+                              class="fs-12 text-primary align-middle light-mode"
+                            ></iconify-icon>
                           </div>
-                          <div class="text-muted small mt-1">14h ago</div>
+                          <div
+                            class="d-flex align-items-center justify-content-between mb-2"
+                          >
+                            <p class="text-muted mb-0">Thursday 3:44pm</p>
+                            <p class="text-muted mb-0">2 hours ago</p>
+                          </div>
+                          <div class="d-flex align-items-center gap-1">
+                            <button
+                              type="button"
+                              class="btn btn-sm bg-white border"
+                            >
+                              Decline
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-sm btn-primary"
+                            >
+                              Accept
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </a>
                   </div>
-                  <div class="dropdown-menu-footer">
-                    <a href="#" class="text-muted">Show all notifications</a>
-                  </div>
+
+                  <!-- All-->
+                  <a
+                    href="javascript:void(0);"
+                    class="dropdown-item text-center text-primary notify-item notify-all fw-bold border-top border-light"
+                    >View all
+                    <i class="fe-arrow-right"></i>
+                  </a>
                 </div>
               </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-icon dropdown-toggle"
-                  href="#"
-                  id="messagesDropdown"
-                  data-bs-toggle="dropdown"
-                >
-                  <div class="position-relative">
-                    <i class="align-middle" data-feather="message-square"></i>
-                  </div>
-                </a>
-                <div
-                  class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0"
-                  aria-labelledby="messagesDropdown"
-                >
-                  <div class="dropdown-menu-header">
-                    <div class="position-relative">4 New Messages</div>
-                  </div>
-                  <div class="list-group">
-                    <a href="#" class="list-group-item">
-                      <div class="row g-0 align-items-center">
-                        <div class="col-2">
-                          <img
-                            src="img/avatars/avatar-5.jpg"
-                            class="avatar img-fluid rounded-circle"
-                            alt="Vanessa Tucker"
-                          />
-                        </div>
-                        <div class="col-10 ps-2">
-                          <div class="text-dark">Vanessa Tucker</div>
-                          <div class="text-muted small mt-1">
-                            Nam pretium turpis et arcu. Duis arcu tortor.
-                          </div>
-                          <div class="text-muted small mt-1">15m ago</div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="list-group-item">
-                      <div class="row g-0 align-items-center">
-                        <div class="col-2">
-                          <img
-                            src="img/avatars/avatar-2.jpg"
-                            class="avatar img-fluid rounded-circle"
-                            alt="William Harris"
-                          />
-                        </div>
-                        <div class="col-10 ps-2">
-                          <div class="text-dark">William Harris</div>
-                          <div class="text-muted small mt-1">
-                            Curabitur ligula sapien euismod vitae.
-                          </div>
-                          <div class="text-muted small mt-1">2h ago</div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="list-group-item">
-                      <div class="row g-0 align-items-center">
-                        <div class="col-2">
-                          <img
-                            src="img/avatars/avatar-4.jpg"
-                            class="avatar img-fluid rounded-circle"
-                            alt="Christina Mason"
-                          />
-                        </div>
-                        <div class="col-10 ps-2">
-                          <div class="text-dark">Christina Mason</div>
-                          <div class="text-muted small mt-1">
-                            Pellentesque auctor neque nec urna.
-                          </div>
-                          <div class="text-muted small mt-1">4h ago</div>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" class="list-group-item">
-                      <div class="row g-0 align-items-center">
-                        <div class="col-2">
-                          <img
-                            src="img/avatars/avatar-3.jpg"
-                            class="avatar img-fluid rounded-circle"
-                            alt="Sharon Lessman"
-                          />
-                        </div>
-                        <div class="col-10 ps-2">
-                          <div class="text-dark">Sharon Lessman</div>
-                          <div class="text-muted small mt-1">
-                            Aenean tellus metus, bibendum sed, posuere ac,
-                            mattis non.
-                          </div>
-                          <div class="text-muted small mt-1">5h ago</div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                  <div class="dropdown-menu-footer">
-                    <a href="#" class="text-muted">Show all messages</a>
-                  </div>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-icon dropdown-toggle d-inline-block d-sm-none"
-                  href="#"
-                  data-bs-toggle="dropdown"
-                >
-                  <i class="align-middle" data-feather="settings"></i>
-                </a>
 
+              <!-- User Dropdown -->
+              <li class="dropdown notification-list topbar-dropdown">
                 <a
-                  class="nav-link dropdown-toggle d-none d-sm-inline-block"
-                  href="#"
+                  class="nav-link dropdown-toggle nav-user me-0"
                   data-bs-toggle="dropdown"
-                  >{% if user.thumbnail %}
+                  href="#"
+                  role="button"
+                  aria-haspopup="false"
+                  aria-expanded="false"
+                >
+                {% if user.profile.photo %}
                   <img
-                    src="{{user.thumbnail.url}}"
-                    class="avatar img-fluid rounded me-1"
-                    alt="Charles Hall"
+                    src="{{user.profile.photo.url}}"
+                    alt="user-image"
+                    class="rounded-circle"
+                  />{% else %}
+                  <img
+                    src="{% static 'img/profile.png'%}"
+                    alt="user-image"
+                    class="rounded-circle"
                   />{% endif %}
-                  <span class="text-dark text-capitalize">{{user}}</span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-end">
-                  <a class="dropdown-item" href="pages-profile.html"
-                    ><i class="align-middle me-1" data-feather="user"></i>
-                    Profile</a
+                <div class="dropdown-menu dropdown-menu-end profile-dropdown">
+                  <!-- item-->
+                  <div class="dropdown-header noti-title">
+                    <h6 class="text-overflow m-0">Welcome {{user.first_name}}!</h6>
+                  </div>
+
+                  <!-- item-->
+                  <a
+                    class="dropdown-item notify-item rounded-2"
+                    href=""
                   >
-                  <a class="dropdown-item" href="#"
-                    ><i class="align-middle me-1" data-feather="pie-chart"></i>
-                    Analytics</a
+                    <iconify-icon
+                      icon="solar:shield-user-outline"
+                      class="fs-18 align-middle"
+                    ></iconify-icon>
+                    <span>Profile</span>
+                  </a>
+
+                  <!-- item-->
+                  <a
+                    class="dropdown-item notify-item rounded-2"
+                    href="/dusty/html/pages-profile"
                   >
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="index.html"
-                    ><i class="align-middle me-1" data-feather="settings"></i>
-                    Settings & Privacy</a
+                    <iconify-icon
+                      icon="solar:settings-linear"
+                      class="fs-18 align-middle"
+                    ></iconify-icon>
+                    <span>Setting</span>
+                  </a>
+
+                  <!-- item-->
+                  <a
+                    class="dropdown-item notify-item rounded-2"
+                    href="/dusty/html/auth-lock-screen"
                   >
-                  <a class="dropdown-item" href="#"
-                    ><i
-                      class="align-middle me-1"
-                      data-feather="help-circle"
-                    ></i>
-                    Help Center</a
+                    <iconify-icon
+                      icon="solar:lock-keyhole-outline"
+                      class="fs-18 align-middle"
+                    ></iconify-icon>
+                    <span>Lock Screen</span>
+                  </a>
+
+                  <!-- item-->
+                  <a
+                    class="dropdown-item notify-item rounded-2"
+                    href="{% url 'logout' %}"
                   >
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{% url 'logout'%}">Log out</a>
+                    <iconify-icon
+                      icon="solar:login-3-outline"
+                      class="fs-18 align-middle"
+                    ></iconify-icon>
+                    <span>Logout</span>
+                  </a>
                 </div>
               </li>
             </ul>
           </div>
-        </nav>
+        </div>
+      </div>
+      <!-- end Topbar -->
 
-        <main class="content">{% block content %}{% endblock %}</main>
+      <!-- Left Sidebar Start -->
+      <div class="app-sidebar-menu">
+        <div class="h-100" data-simplebar>
+          <!--- Sidemenu -->
+          <div id="sidebar-menu">
+            <div class="logo-box">
+              <a class="logo logo-light" href="/dusty/html/">
+                <span class="logo-sm">
+                  <img src="{% static 'img/logo.png'%}" alt="" height="22" />
+                </span>
+                <span class="logo-lg">
+                  <img src="{% static 'img/logo-lg.png'%}" alt="" height="35" />
+                </span>
+              </a>
+              <a class="logo logo-dark" href="/dusty/html/">
+                <span class="logo-sm">
+                  <img src="{% static 'img/logo.png'%}" alt="" height="22" />
+                </span>
+                <span class="logo-lg">
+                  <img src="{% static 'img/logo-lg.png'%}" alt="" height="35" />
+                </span>
+              </a>
+            </div>
 
+            <ul id="side-menu">
+              <li class="menu-title">Menu</li>
+
+              <li>
+                <a href="#sidebarDashboards" data-bs-toggle="collapse">
+                  <span class="nav-icon">
+                    <iconify-icon
+                      icon="solar:home-2-bold-duotone"
+                    ></iconify-icon>
+                  </span>
+                  <span> Dashboard </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarDashboards">
+                  <ul class="nav-second-level">
+                    <li>
+                      <a class="tp-link" href="/dusty/html/">Sales</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/analytics"
+                        >Analytics</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="menu-title mt-2">Apps</li>
+
+              <li>
+                <a class="tp-link" href="{% url 'seasons' %}">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:bill-list-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Seasons </span>
+                </a>
+              </li>
+
+              <li>
+                <a class="tp-link" href="{% url 'venues' %}">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:shield-user-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Venues </span>
+                </a>
+              </li>
+
+              <li>
+                <a class="tp-link" href="{% url 'courses' %}">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:calendar-minimalistic-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Courses </span>
+                </a>
+              </li>
+
+              <li class="menu-title">TRAINEES</li>
+              
+              <li>
+                <a class="tp-link" href="{% url 'trainees' %}">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:cpu-bolt-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Trainees </span>
+                </a>
+              </li>
+
+              <li>
+                <a class="tp-link" href="">
+                 <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:clipboard-text-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Shares </span>
+                </a>
+              </li>
+
+              <li>
+                <a class="tp-link" href="">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:lock-keyhole-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Loans </span>
+                </a>
+              </li>
+
+
+
+              <li class="menu-title mt-2">General</li>
+
+              <li>
+                <a href="#sidebarBaseui" data-bs-toggle="collapse">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:compass-square-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Components </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarBaseui">
+                  <ul class="nav-second-level">
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-accordions"
+                        >Accordions</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-alerts">Alerts</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-badges">Badges</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-breadcrumb"
+                        >Breadcrumb</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-buttons"
+                        >Buttons</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-cards">Cards</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-collapse"
+                        >Collapse</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-dropdowns"
+                        >Dropdowns</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-video"
+                        >Embed Video</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-grid">Grid</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-images">Images</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-list"
+                        >List Group</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-modals">Modals</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-placeholders"
+                        >Placeholders</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-pagination"
+                        >Pagination</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-popovers"
+                        >Popovers</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-progress"
+                        >Progress</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-scrollspy"
+                        >Scrollspy</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-spinners"
+                        >Spinners</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-tabs">Tabs</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-tooltips"
+                        >Tooltips</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/ui-typography"
+                        >Typography</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li>
+                <a href="#sidebarWidgetsui" data-bs-toggle="collapse">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:box-minimalistic-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Widgets </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarWidgetsui">
+                  <ul class="nav-second-level">
+                    <li>
+                      <a class="tp-link" href="/dusty/html/widget-card"
+                        >Widget Card</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/widget-chart"
+                        >Widget Chart</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <!-- <li>
+                            <a href="widgets.html" class="tp-link">
+                                <span class="nav-icon"><iconify-icon
+                                        icon="solar:box-minimalistic-bold-duotone"></iconify-icon></span>
+                                <span> Widgets </span>
+                            </a>
+                        </li> -->
+
+              <li>
+                <a href="#sidebarAdvancedUI" data-bs-toggle="collapse">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:quit-full-screen-square-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Extended UI </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarAdvancedUI">
+                  <ul class="nav-second-level">
+                    <li>
+                      <a class="tp-link" href="/dusty/html/extended-carousel"
+                        >Carousel</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="tp-link"
+                        href="/dusty/html/extended-notifications"
+                        >Notifications</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/extended-offcanvas"
+                        >Offcanvas</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="tp-link"
+                        href="/dusty/html/extended-range-slider"
+                        >Range Slider</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li>
+                <a href="#sidebarIcons" data-bs-toggle="collapse">
+                  <span class="nav-icon"
+                    ><iconify-icon icon="solar:wind-bold-duotone"></iconify-icon
+                  ></span>
+                  <span> Icons </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarIcons">
+                  <ul class="nav-second-level">
+                    <li>
+                      <a class="tp-link" href="/dusty/html/icons-feather"
+                        >Feather Icons</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/icons-mdi"
+                        >Material Design Icons</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li>
+                <a href="#sidebarForms" data-bs-toggle="collapse">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:document-add-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Forms </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarForms">
+                  <ul class="nav-second-level">
+                    <li>
+                      <a class="tp-link" href="/dusty/html/forms-elements"
+                        >General Elements</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/forms-validation"
+                        >Validation</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/forms-quilljs"
+                        >Quilljs Editor</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/forms-pickers"
+                        >Picker</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li>
+                <a href="#sidebarTables" data-bs-toggle="collapse">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:siderbar-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Tables </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarTables">
+                  <ul class="nav-second-level">
+                    <li>
+                      <a class="tp-link" href="/dusty/html/tables-basic"
+                        >Basic Tables</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/tables-datatables"
+                        >Data Tables</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li>
+                <a href="#sidebarCharts" data-bs-toggle="collapse">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:pie-chart-2-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Apex Charts </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarCharts">
+                  <ul class="nav-second-level">
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-area">Area</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-bar">Bar</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-boxplot"
+                        >Boxplot</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-bubble"
+                        >Bubble</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-candlestick"
+                        >Candlestick</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-column"
+                        >Column</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-funnel"
+                        >Funnel</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-heatmap"
+                        >Heatmap</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-line">Line</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-mixed"
+                        >Mixed</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-pie">Pie</a>
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-polararea"
+                        >Polar</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-radar"
+                        >Radar</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-radialbar"
+                        >Radialbar</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-rangearea"
+                        >Range Area</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-scatter"
+                        >Scatter</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-timeline"
+                        >Timeline</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/charts-treemap"
+                        >Treemap</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li>
+                <a href="#sidebarMaps" data-bs-toggle="collapse">
+                  <span class="nav-icon"
+                    ><iconify-icon
+                      icon="solar:map-point-bold-duotone"
+                    ></iconify-icon
+                  ></span>
+                  <span> Maps </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarMaps">
+                  <ul class="nav-second-level">
+                    <li>
+                      <a class="tp-link" href="/dusty/html/maps-google"
+                        >Google Maps</a
+                      >
+                    </li>
+                    <li>
+                      <a class="tp-link" href="/dusty/html/maps-vector"
+                        >Vector Maps</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- End Sidebar -->
+
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      <!-- Left Sidebar End -->
+
+
+      <div class="content-page">
+   
+      <!-- ============================================================== -->
+      <!-- Start Page Content here -->
+      <!-- ============================================================== -->
+{% block content %}{% endblock  %}
+        <!-- Footer Start -->
         <footer class="footer">
           <div class="container-fluid">
-            <div class="row text-muted">
-              <div class="col-6 text-start">
-                <p class="mb-0">
-                  <a
-                    class="text-muted"
-                    href="https://usssaonline.com/"
-                    target="_blank"
-                    ><strong>USSSA CAPACITY BUILDING</strong></a
-                  >
-                  - &copy;
-                </p>
-              </div>
-              <div class="col-6 text-end">
-                <ul class="list-inline">
-                  <li class="list-inline-item">
-                    <a
-                      class="text-muted"
-                      href="https://adminkit.io/"
-                      target="_blank"
-                      >Support</a
-                    >
-                  </li>
-                  <li class="list-inline-item">
-                    <a
-                      class="text-muted"
-                      href="https://adminkit.io/"
-                      target="_blank"
-                      >Help Center</a
-                    >
-                  </li>
-                  <li class="list-inline-item">
-                    <a
-                      class="text-muted"
-                      href="https://adminkit.io/"
-                      target="_blank"
-                      >Privacy</a
-                    >
-                  </li>
-                  <li class="list-inline-item">
-                    <a
-                      class="text-muted"
-                      href="https://adminkit.io/"
-                      target="_blank"
-                      >Terms</a
-                    >
-                  </li>
-                </ul>
+            <div class="row">
+              <div class="col fs-13 text-muted text-center">
+                &copy;
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                - Made with <span class="mdi mdi-heart text-danger"></span> by
+                <a href="#!" class="text-reset fw-semibold">Shafiq</a>
               </div>
             </div>
           </div>
         </footer>
+        <!-- end Footer -->
       </div>
+      <!-- ============================================================== -->
+      <!-- End Page content -->
+      <!-- ============================================================== -->
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'js/app.js'%}"></script>
-    <!-- <script src="{% static 'js/app.js'%}"></script>-->
-    <script>
-      $(document).ready(function () {
-        $("#myTable").DataTable();
-      });
-    </script>
-    <script>
-      $(document).ready(function () {
-        $("#myaTable").DataTable();
-      });
-    </script>
-    <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
-    <!--<script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
-  -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var ctx = document
-          .getElementById("chartjs-dashboard-line")
-          .getContext("2d");
-        var gradient = ctx.createLinearGradient(0, 0, 0, 225);
-        gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
-        gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
-        // Line chart
-        new Chart(document.getElementById("chartjs-dashboard-line"), {
-          type: "line",
-          data: {
-            labels: [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ],
-            datasets: [
-              {
-                label: "Sales ($)",
-                fill: true,
-                backgroundColor: gradient,
-                borderColor: window.theme.primary,
-                data: [
-                  2115, 1562, 1584, 1892, 1587, 1923, 2566, 2448, 2805, 3438,
-                  2917, 3327,
-                ],
-              },
-            ],
-          },
-          options: {
-            maintainAspectRatio: false,
-            legend: {
-              display: false,
-            },
-            tooltips: {
-              intersect: false,
-            },
-            hover: {
-              intersect: true,
-            },
-            plugins: {
-              filler: {
-                propagate: false,
-              },
-            },
-            scales: {
-              xAxes: [
-                {
-                  reverse: true,
-                  gridLines: {
-                    color: "rgba(0,0,0,0.0)",
-                  },
-                },
-              ],
-              yAxes: [
-                {
-                  ticks: {
-                    stepSize: 1000,
-                  },
-                  display: true,
-                  borderDash: [3, 3],
-                  gridLines: {
-                    color: "rgba(0,0,0,0.0)",
-                  },
-                },
-              ],
-            },
-          },
-        });
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Pie chart
-        new Chart(document.getElementById("chartjs-dashboard-pie"), {
-          type: "pie",
-          data: {
-            labels: ["Chrome", "Firefox", "IE"],
-            datasets: [
-              {
-                data: [4306, 3801, 1689],
-                backgroundColor: [
-                  window.theme.primary,
-                  window.theme.warning,
-                  window.theme.danger,
-                ],
-                borderWidth: 5,
-              },
-            ],
-          },
-          options: {
-            responsive: !window.MSInputMethodContext,
-            maintainAspectRatio: false,
-            legend: {
-              display: false,
-            },
-            cutoutPercentage: 75,
-          },
-        });
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Bar chart
-        new Chart(document.getElementById("chartjs-dashboard-bar"), {
-          type: "bar",
-          data: {
-            labels: [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ],
-            datasets: [
-              {
-                label: "This year",
-                backgroundColor: window.theme.primary,
-                borderColor: window.theme.primary,
-                hoverBackgroundColor: window.theme.primary,
-                hoverBorderColor: window.theme.primary,
-                data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-                barPercentage: 0.75,
-                categoryPercentage: 0.5,
-              },
-            ],
-          },
-          options: {
-            maintainAspectRatio: false,
-            legend: {
-              display: false,
-            },
-            scales: {
-              yAxes: [
-                {
-                  gridLines: {
-                    display: false,
-                  },
-                  stacked: false,
-                  ticks: {
-                    stepSize: 20,
-                  },
-                },
-              ],
-              xAxes: [
-                {
-                  stacked: false,
-                  gridLines: {
-                    color: "transparent",
-                  },
-                },
-              ],
-            },
-          },
-        });
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var markers = [
-          {
-            coords: [31.230391, 121.473701],
-            name: "Shanghai",
-          },
-          {
-            coords: [28.70406, 77.102493],
-            name: "Delhi",
-          },
-          {
-            coords: [6.524379, 3.379206],
-            name: "Lagos",
-          },
-          {
-            coords: [35.689487, 139.691711],
-            name: "Tokyo",
-          },
-          {
-            coords: [23.12911, 113.264381],
-            name: "Guangzhou",
-          },
-          {
-            coords: [40.7127837, -74.0059413],
-            name: "New York",
-          },
-          {
-            coords: [34.052235, -118.243683],
-            name: "Los Angeles",
-          },
-          {
-            coords: [41.878113, -87.629799],
-            name: "Chicago",
-          },
-          {
-            coords: [51.507351, -0.127758],
-            name: "London",
-          },
-          {
-            coords: [40.416775, -3.70379],
-            name: "Madrid ",
-          },
-        ];
-        var map = new jsVectorMap({
-          map: "world",
-          selector: "#world_map",
-          zoomButtons: true,
-          markers: markers,
-          markerStyle: {
-            initial: {
-              r: 9,
-              strokeWidth: 7,
-              stokeOpacity: 0.4,
-              fill: window.theme.primary,
-            },
-            hover: {
-              fill: window.theme.primary,
-              stroke: window.theme.primary,
-            },
-          },
-          zoomOnScroll: false,
-        });
-        window.addEventListener("resize", () => {
-          map.updateSize();
-        });
-      });
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
-        var defaultDate =
-          date.getUTCFullYear() +
-          "-" +
-          (date.getUTCMonth() + 1) +
-          "-" +
-          date.getUTCDate();
-        document.getElementById("datetimepicker-dashboard").flatpickr({
-          inline: true,
-          prevArrow: '<span title="Previous month">&laquo;</span>',
-          nextArrow: '<span title="Next month">&raquo;</span>',
-          defaultDate: defaultDate,
-        });
-      });
-    </script>
+ 
+    {% include "assets/js.html" %}
   </body>
 </html>

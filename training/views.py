@@ -3,17 +3,28 @@ from xhtml2pdf import pisa
 from django.template.loader import get_template
 from django.http import HttpResponse
 from django.contrib import messages
-from xhtml2pdf import pisa
 from io import BytesIO
 from .models import *
 from .forms import *
 from django.db import IntegrityError
 from django.core.files.base import ContentFile
 import base64
-
+from django.contrib.auth.decorators import login_required
+from .filters import TraineeFilter 
+from django.views.decorators.csrf import csrf_exempt
+import json
+import logging
+import random
+from django.db import transaction
+from django.db import transaction as db_transaction
+from django.conf import settings
+import requests
+import re
+from django.urls import reverse
 from django.http import JsonResponse
+logger = logging.getLogger(__name__)
 
-
+airtel_logger = logging.getLogger('airtel_callback')  # Use the specific logger
 
 def get_venues(request):
     season_id = request.GET.get("season_id")  # Get the selected season ID from the request
@@ -33,13 +44,33 @@ def get_courses(request):
     if venue_id:
         try:
             venue = Venue.objects.get(id=venue_id)  # Retrieve the venue instance
-            courses = venue.course_set.values(
-                "id", "name"
-            )  # Get related courses
+            courses = venue.courses.values("id", "name")
+  # Get related courses
             return JsonResponse(list(courses), safe=False)
         except Venue.DoesNotExist:
             return JsonResponse({"error": "COurse not found"}, status=404)
     return JsonResponse([], safe=False)
+
+def get_levels(request):
+    course_id = request.GET.get("course_id")
+
+    if not course_id:
+        return JsonResponse({"error": "Missing course_id parameter"}, status=400)
+
+    try:
+        course = Course.objects.select_related("level").get(id=course_id)
+    except Course.DoesNotExist:
+        return JsonResponse({"error": "Course not found"}, status=404)
+
+    if course.level:
+        level_data = {
+            "id": course.level.id,
+            "name": course.level.name,
+        }
+        return JsonResponse(level_data)
+    else:
+        return JsonResponse({"message": "This course has no level assigned"})
+
 
 def get_level(request):
     course_id = request.GET.get("course_id")  # Get the selected course ID from the request
@@ -54,59 +85,295 @@ def get_level(request):
             return JsonResponse({"error": "Level not found"}, status=404)
     return JsonResponse([], safe=False)
 
-
 def trainee_add(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = TraineesForm(request.POST, request.FILES)
-
         if form.is_valid():
             try:
-                new_trainee = form.save(commit=False)
+                phone_number = form.cleaned_data.get('phone_number')
 
-                cropped_data = request.POST.get("photo_cropped")
-                if cropped_data:
-                    try:
-                        format, imgstr = cropped_data.split(";base64,")
-                        ext = format.split("/")[-1]
-                        data = ContentFile(
-                            base64.b64decode(imgstr), name=f"photo.{ext}"
+                if not phone_number:
+                    messages.error(request, "You must provide a phone number.")
+                    return render(request, 'trainees/add_trainee.html', {'form': form})
+
+                # 💰 Calculate total payment
+                amount_per_trainee = 10000  # Base fee (UGX)
+                extra_fee = 500  # Processing fee
+                amount = amount_per_trainee + extra_fee
+
+                with transaction.atomic():
+                    trainee = form.save(commit=False)
+                    trainee.amount = amount
+                    trainee.payment_status = "Pending"  # Wait for Airtel to confirm
+                    trainee.transaction_id = str(random.randint(10**11, 10**12 - 1)) 
+                    trainee.save()
+
+                # 🔐 Get Airtel API Token
+                token = get_airtel_token()
+                if not token:
+                    messages.error(request, "Failed to connect to Airtel. Please try again later.")
+                    return render(request, 'trainees/add_trainee.html', {'form': form})
+
+                # 🌍 Airtel API endpoint
+                payment_url = "https://openapi.airtel.africa/merchant/v2/payments/"
+
+                # 💳 Clean phone number and prepare payload
+                msisdn = re.sub(r"\D", "", str(phone_number)).lstrip('0')
+                headers = {
+                    "Accept": "*/*",
+                    "Content-Type": "application/json",
+                    "X-Country": "UG",
+                    "X-Currency": "UGX",
+                    "Authorization": f"Bearer {token}",
+                    "x-signature": settings.AIRTEL_API_SIGNATURE,
+                    "x-key": settings.AIRTEL_API_KEY,
+                }
+
+                payload = {
+                    "reference": str(trainee.transaction_id),
+                    "subscriber": {
+                        "country": "UG",
+                        "currency": "UGX",
+                        "msisdn": msisdn,
+                    },
+                    "transaction": {
+                        "amount": float(amount),
+                        "country": "UG",
+                        "currency": "UGX",
+                        "id": trainee.transaction_id,
+                    },
+                }
+
+                # 🚀 Send request to Airtel
+                response = requests.post(payment_url, json=payload, headers=headers)
+                logger.info(f"Airtel Payment Response ({response.status_code}): {response.text}")
+
+                # 🧾 Update trainee record with payment info
+                with transaction.atomic():
+                    if response.status_code == 200:
+                        trainee.payment_status = "Pending"
+                        trainee.save()
+                        messages.success(
+                            request,
+                            f"Registration initiated successfully! Please confirm payment of UGX {amount} on your Airtel line."
                         )
-                        new_trainee.photo = data  # Assign cropped image
-                    except (ValueError, TypeError):
-                        messages.error(request, "Invalid image data.")
-                        return render(request, "trainee_new.html", {"form": form})
+                        return redirect(reverse('payment_pending', args=[trainee.transaction_id]))
+                    else:
+                        trainee.payment_status = "Failed"
+                        trainee.save()
+                        messages.error(request, "Payment initiation failed. Please try again.")
+                        return render(request, 'trainees/add_trainee.html', {'form': form})
 
-                new_trainee.save()
-                messages.success(
-                    request,
-                    "Registered successfully! PAY TO SECURE YOUR PLACE",
-                )
-                return redirect("addtrainee")
-
-            except IntegrityError:
-                messages.error(request, "There was an error saving the trainee.")
-                return render(request, "trainee_new.html", {"form": form})
+            except Exception as e:
+                logger.error(f"❌ Error during trainee registration/payment: {str(e)}", exc_info=True)
+                messages.error(request, "An error occurred while processing your payment. Please try again.")
 
     else:
         form = TraineesForm()
 
-    context = {"form": form}
-    return render(request, "trainee_new.html", context)
+    return render(request, 'trainees/add_trainee.html', {'form': form, 'amount': 10500 })  # Pass the amount to the template
+
+def get_airtel_token():
+    """
+    Retrieve Airtel Money OAuth token.
+    """
+    try:
+        url = "https://openapi.airtel.africa/auth/oauth2/token"
+        headers = {"Content-Type": "application/json", "Accept": "*/*" }
+        payload = {
+            "client_id": settings.AIRTEL_MONEY_CLIENT_ID,
+            "client_secret": settings.AIRTEL_MONEY_CLIENT_SECRET,
+            "grant_type": "client_credentials",
+        }
+
+        response = requests.post(url, json=payload, headers=headers, params={})
+        logger.info(f"Token Response: {response.status_code}, {response.text}")
+        print(response.json())
+        if response.status_code == 200:
+            return response.json().get("access_token")
+
+        # Handle common errors
+        error_response = response.json()
+        error_message = error_response.get("error_description", error_response.get("message", "Unknown error"))
+
+        if response.status_code == 400:
+            logger.error("Invalid request format. Check parameters.")
+            return None
+        elif response.status_code == 401:
+            logger.error("Authentication failed. Check your API credentials.")
+            return None
+        elif response.status_code == 403:
+            logger.error("Permission denied. Your account may not have access.")
+            return None
+        elif response.status_code == 500:
+            logger.error("Airtel Money server error. Try again later.")
+            return None
+
+        logger.error(f"Failed to get token: {error_message}")
+        return None
+
+    except requests.exceptions.ConnectionError:
+        logger.error("Network error: Unable to reach Airtel Money API.")
+        return None
+    except requests.exceptions.Timeout:
+        logger.error("Request timed out: Airtel Money API took too long to respond.")
+        return None
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Unexpected request error: {str(e)}")
+        return None
+    except Exception as e:
+        logger.error(f"Unknown error: {str(e)}")
+        return None
 
 
-from django.http import HttpResponse
-from django.template.loader import get_template
-from xhtml2pdf import pisa
-from io import BytesIO
-from django.contrib.auth.decorators import login_required
+@csrf_exempt
+def airtel_payment_callback(request):
+    if request.method != 'POST':
+        return HttpResponse("Method Not Allowed", status=405)
 
-from .filters import TraineeFilter  # Assume you have created this filter
+    try:
+        # Log raw request body
+        raw_body = request.body.decode('utf-8')
+        airtel_logger.info(f"🔔 Airtel Callback Received: {raw_body}")
+
+        # Parse JSON payload
+        payload = json.loads(raw_body)
+        airtel_logger.info(f"📜 Parsed JSON Payload:\n{json.dumps(payload, indent=2)}")
+
+        # Extract transaction details
+        transaction = payload.get("transaction", {})
+        transaction_id = transaction.get("id")
+        status_code = transaction.get("status_code")
+        airtel_money_id = transaction.get("airtel_money_id")
+        
+        
+        # Find the Trainee record using transaction_id
+        trainee = get_object_or_404(Trainee, transaction_id=transaction_id)
+
+        # Map Airtel status to our system status
+        status_mapping = {
+            "TS": "COMPLETED",  # Transaction Successful
+            "TF": "FAILED",      # Transaction Failed
+            "TP": "PENDING",     # Transaction Pending
+        }
+
+        # Update payment status
+        new_status = status_mapping.get(status_code, "Failed")
+
+        with transaction.atomic():
+            trainee.payment_status = new_status
+
+            if new_status == "Completed":
+                trainee.is_paid = True  # ✅ Mark as paid
+                airtel_logger.info(f"✅ Payment successful for {trainee.first_name} {trainee.last_name}")
+            else:
+                trainee.is_paid = False
+                airtel_logger.warning(f"⚠️ Payment not completed: {new_status} for {trainee.transaction_id}")
+
+            trainee.save()
+
+        airtel_logger.info(f"📌 Transaction ID: {transaction_id}, Status Code: {status_code}, Airtel Money ID: {airtel_money_id}")
+
+        return JsonResponse({"message": "Callback received successfully"}, status=200)
+
+    except json.JSONDecodeError:
+        airtel_logger.error("❌ Invalid JSON received in callback")
+        return JsonResponse({"error": "Invalid JSON"}, status=400)
+
+    except Exception as e:
+        airtel_logger.error(f"❌ Error processing callback: {str(e)}")
+        return JsonResponse({"error": "Internal Server Error"}, status=500)
+    
+  
+# def generate_unique_transaction_id():
+#     """Generate a unique 12-digit transaction ID."""
+#     while True:
+#         transaction_id = str(random.randint(10**11, 10**12 - 1))  # 12-digit random number
+#         if not Trainee.objects.filter(transaction_id=transaction_id).exists():  # Ensure uniqueness
+#             return transaction_id
+
+
+# def initiate_payment(request, id):
+#     payment = get_object_or_404(Trainee, id=id)
+    
+#     try:
+#         token = get_airtel_token()  
+#         if not token:
+#             return JsonResponse({"error": "Failed to get authentication token"}, status=500)
+
+#         payment_url = "https://openapi.airtel.africa/merchant/v2/payments/"
+#         transaction_id = generate_unique_transaction_id()  
+
+
+#         headers = {
+#             "Accept": "*/*",
+#             "Content-Type": "application/json",
+#             "X-Country": "UG",
+#             "X-Currency": "UGX",
+#             "Authorization": f"Bearer {token}",
+#             "x-signature": settings.AIRTEL_API_SIGNATURE,  # Ensure this is set in settings.py
+#             "x-key": settings.AIRTEL_API_KEY,  # Ensure this is set in settings.py
+#         }
+
+#         payload = {
+#             "reference": str(payment.transaction_id),  # Use the Trainee ID as the reference
+#             "subscriber": {
+#                 "country": "UG",
+#                 "currency": "UGX",
+#                 "msisdn": re.sub(r"\D", "", str(payment.phone_number)).lstrip('0'),   # Remove non-numeric characters
+#             },
+#             "transaction": {
+#                 "amount": float(payment.amount),  # Convert DecimalField to float
+#                 "country": "UG",
+#                 "currency": "UGX",
+#                 "id": transaction_id,  # Use the generated transaction ID
+#             }
+#         }
+
+#         response = requests.post(payment_url, json=payload, headers=headers)
+#         logger.info(f"Trainee Response: {response.status_code}, {response.text}")
+
+#        # Update payment record with transaction ID and set status to PENDING
+#         with db_transaction.atomic():
+#             payment.transaction_id = transaction_id
+#             payment.status = "PENDING"  # Set status to pending until confirmed
+#             payment.save()
+
+#         if response.status_code == 200:
+#             return redirect(reverse('payment_success', args=[payment.transaction_id]))  # ✅ Redirect to success page
+#         else:
+#             return JsonResponse({"error": "Failed to initiate payment", "details": response.text}, status=400)
+
+#     except Exception as e:
+#         logger.error(f"Trainee error: {str(e)}")
+#         return JsonResponse({"error": str(e)}, status=500)
+
+
+  
+
+    
+    
+    
+def payment_success(request, transaction_id):
+    payment = Trainee.objects.filter(transaction_id=transaction_id).first()
+    
+    if not payment:
+        return render(request, 'payment_failed.html', {'error': 'Transaction not found'})
+
+    return render(request, 'emails/payment_success.html', {
+        'amount': payment.amount,
+        'transaction_id': payment.transaction_id,
+        'timestamp': payment.created_at,  # Make sure your Trainee model has `created_at`
+    })
+    
+
+ # Assume you have created this filter
 
 
 @login_required(login_url="login")
 def trainees(request):
     # Get all trainees
-    trainees = Trainee.objects.all().order_by("-entry_date")
+    trainees = Trainee.objects.all().order_by("-created_at")
 
     # Apply the filter
     trainee_filter = TraineeFilter(request.GET, queryset=trainees)
@@ -147,7 +414,7 @@ def trainees(request):
         # Render the filter form
         return render(
             request,
-            "trainees.html",
+            "trainees/trainees.html",
             {"trainee_filter": trainee_filter},
         )
 

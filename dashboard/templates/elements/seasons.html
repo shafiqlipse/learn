@@ -1,0 +1,198 @@
+{% extends "dashboard/dashboard.html" %} {%load static%}
+<!---->
+{% block title %} Seasons{% endblock %}
+<!---->
+
+{%block content%}
+<div class="content">
+  <!-- Start Content-->
+  <div class="container-fluid">
+    <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+      <div class="flex-grow-1">
+        <h4 class="fs-18 fw-semibold m-0">Dashboard</h4>
+      </div>
+
+      <div class="text-end">
+        <ol class="breadcrumb m-0 py-0">
+          <li class="breadcrumb-item">
+            <a href="javascript: void(0);" class="text-primary">CBD</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="javascript: void(0);">Apps</a>
+          </li>
+          <li class="breadcrumb-item active">Seasons</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Start Main Widgets -->
+    <div class="row">
+      <div class="col-md-6 col-lg-4 col-xl">
+        <div class="card">
+          <div
+            class="card-header d-flex justify-content-between align-items-center"
+          >
+            <h3>Seasons</h3>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#seasonsModal"
+            >
+              Add a Season
+            </button>
+          </div>
+          <div class="card-body">
+            <table
+              id="schools"
+              class="table table-striped dt-responsive nowrap w-100"
+            >
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Year</th>
+                  <th>Start Date</th>
+                  <th>Status</th>
+                  <th>Added by</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for season in seasons%}
+                <tr>
+                  <td>
+                    <a href="">{{season.name}}</a>
+                  </td>
+                  <td>{{ season.year }}</td>
+                  <td>{{ season.start_date }}</td>
+                  <td>{{ season.status }}</td>
+                  <td>{{ season.added_by }}</td>
+
+                  <td>
+                    <a
+                      href="#"
+                      class="edit-season-btn"
+                      data-id="{{ season.id }}"
+                      data-name="{{ season.name }}"
+                    >
+                      <i class="fa fa-pencil"></i>Edit
+                    </a>
+                  </td>
+                  <td>
+                    <a href="" class="del"><i class="fa fa-trash"></i>Delete</a>
+                  </td>
+                </tr>
+
+                {%endfor%}
+              </tbody>
+            </table>
+          </div>
+          <!-- end card body-->
+        </div>
+        <!-- end card -->
+        <!-- end card body-->
+      </div>
+      <!-- end card -->
+    </div>
+    <!-- end col-->
+  </div>
+  <!-- end row-->
+  <div
+    class="modal fade"
+    id="seasonsModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="seasonsModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="seasonsModalLabel">Add a Season</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post" class="form-control">
+            {% csrf_token %} {{cform.as_p}}
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="editSchoolModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="POST" enctype="multipart/form-data" id="editSchoolForm" class="form-control p-3 ">
+          {% csrf_token %}
+          <input type="hidden" name="season_id" id="edit_season_id" />
+          <div class="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              id="edit_season_name"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label>Start Date</label>
+            <input
+              type="date"
+              name="start_date"
+              id="edit_season_start_date"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label>Year</label>
+            <input
+              type="number"
+              name="year"
+              id="edit_season_year"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select name="status" id="edit_season_status" class="form-control">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll(".edit-season-btn").forEach(function (button) {
+        button.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.getElementById("edit_season_id").value = this.dataset.id;
+          document.getElementById("edit_season_name").value = this.dataset.name;
+          $("#editSchoolModal").modal("show");
+        });
+      });
+    });
+  </script>
+</div>
+{% endblock %}

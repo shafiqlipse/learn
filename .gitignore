@@ -8,6 +8,7 @@ resources/migrations/*
 training/migrations/*
 xcom/migrations/*
 trainers/migrations/*
+agm/migrations/*
 championship/migrations/*
 
 

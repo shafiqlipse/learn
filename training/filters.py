@@ -30,13 +30,13 @@ class TraineeFilter(django_filters.FilterSet):
 
     course = django_filters.ModelChoiceFilter(
         queryset=Course.objects.all(),
-        label="Discipline",
+        label="Course",
         widget=forms.Select(attrs={"class": "form-control"})
     )
 
-    entry_date = DateFromToRangeFilter(
-        field_name="entry_date",
-        label="Entry Date (Range)",
+    created_at = DateFromToRangeFilter(
+        field_name="created_at",
+        label="Created At (Range)",
         widget=RangeWidget(
             attrs={"type": "date", "class": "form-control"}
         ),
@@ -44,4 +44,4 @@ class TraineeFilter(django_filters.FilterSet):
 
     class Meta:
         model = Trainee
-        fields = ["gender", "venue", "course", "level", "entry_date"]
+        fields = ["gender", "venue", "course", "level", "created_at"]
