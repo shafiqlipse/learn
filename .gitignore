@@ -11,7 +11,7 @@ trainers/migrations/*
 agm/migrations/*
 championship/migrations/*
 
-
+logs/airtel_payments.log
 
 # Media and uploaded files (one level up)
 profile/

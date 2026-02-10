@@ -22,7 +22,6 @@ class TraineesForm(forms.ModelForm):
             "designation",
             "level",
             "residence_type",
-            "phone_number",
            
         ]
         def __init__(self, *args, **kwargs):
@@ -46,7 +45,6 @@ class TraineesForm(forms.ModelForm):
             "photo": forms.FileInput(attrs={"class": "form-control"}),
             "gender": forms.Select(attrs={"class": "form-control"}),
             "level": forms.Select(attrs={"class": "form-control"}),
-            "phone_number": forms.TextInput(attrs={"class": "form-control"}),
             "date_of_birth": forms.DateInput(
                 attrs={"type": "date", "class": "form-control"}
             ),

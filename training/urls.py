@@ -11,8 +11,10 @@ urlpatterns = [
     # venues
     path("addtrainee/", trainee_add, name="addtrainee"),
     # path("teccred/", teccreditation, name="teccred"),
-    path('export-csv/', export_csv, name='export_csv'),
+    path('export_tcsv/', export_tcsv, name='export_tcsv'),
     path("trainees/", trainees, name="trainees"),
+    path("archived-trainees/", archived_trainees, name="archived_trainees"),
+    path("unpaid-trainees/", unpaid_trainees, name="unpaid_trainees"),
     path('get-courses/', get_courses, name='get_courses'),
     path('get-venues/', get_venues, name='get_venues'),
     path('get-level/', get_levels, name='get_levels'),

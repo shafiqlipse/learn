@@ -41,19 +41,7 @@ class Trainee(models.Model):
     
 
     # 💳 Payment-related fields
-    transaction_id = models.CharField(max_length=100, unique=True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    phone_number = models.CharField(max_length=15)
-    payment_status = models.CharField(
-        max_length=20,
-        choices=[
-            ("Pending", "Pending"),
-            ("Completed", "Completed"),
-            ("Failed", "Failed"),
-        ],
-        default="Pending",
-    )
-    paid_at = models.DateTimeField(auto_now_add=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

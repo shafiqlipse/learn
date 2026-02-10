@@ -90,83 +90,31 @@ def trainee_add(request):
         form = TraineesForm(request.POST, request.FILES)
         if form.is_valid():
             try:
-                phone_number = form.cleaned_data.get('phone_number')
+                new_trainee = form.save(commit=False)
 
-                if not phone_number:
-                    messages.error(request, "You must provide a phone number.")
-                    return render(request, 'trainees/add_trainee.html', {'form': form})
-
-                # 💰 Calculate total payment
-                amount_per_trainee = 10000  # Base fee (UGX)
-                extra_fee = 500  # Processing fee
-                amount = amount_per_trainee + extra_fee
-
-                with transaction.atomic():
-                    trainee = form.save(commit=False)
-                    trainee.amount = amount
-                    trainee.payment_status = "Pending"  # Wait for Airtel to confirm
-                    trainee.transaction_id = str(random.randint(10**11, 10**12 - 1)) 
-                    trainee.save()
-
-                # 🔐 Get Airtel API Token
-                token = get_airtel_token()
-                if not token:
-                    messages.error(request, "Failed to connect to Airtel. Please try again later.")
-                    return render(request, 'trainees/add_trainee.html', {'form': form})
-
-                # 🌍 Airtel API endpoint
-                payment_url = "https://openapi.airtel.africa/merchant/v2/payments/"
-
-                # 💳 Clean phone number and prepare payload
-                msisdn = re.sub(r"\D", "", str(phone_number)).lstrip('0')
-                headers = {
-                    "Accept": "*/*",
-                    "Content-Type": "application/json",
-                    "X-Country": "UG",
-                    "X-Currency": "UGX",
-                    "Authorization": f"Bearer {token}",
-                    "x-signature": settings.AIRTEL_API_SIGNATURE,
-                    "x-key": settings.AIRTEL_API_KEY,
-                }
-
-                payload = {
-                    "reference": str(trainee.transaction_id),
-                    "subscriber": {
-                        "country": "UG",
-                        "currency": "UGX",
-                        "msisdn": msisdn,
-                    },
-                    "transaction": {
-                        "amount": float(amount),
-                        "country": "UG",
-                        "currency": "UGX",
-                        "id": trainee.transaction_id,
-                    },
-                }
-
-                # 🚀 Send request to Airtel
-                response = requests.post(payment_url, json=payload, headers=headers)
-                logger.info(f"Airtel Payment Response ({response.status_code}): {response.text}")
-
-                # 🧾 Update trainee record with payment info
-                with transaction.atomic():
-                    if response.status_code == 200:
-                        trainee.payment_status = "Pending"
-                        trainee.save()
-                        messages.success(
-                            request,
-                            f"Registration initiated successfully! Please confirm payment of UGX {amount} on your Airtel line."
+                cropped_data = request.POST.get("photo_cropped")
+                if cropped_data:
+                    try:
+                        format, imgstr = cropped_data.split(";base64,")
+                        ext = format.split("/")[-1]
+                        data = ContentFile(
+                            base64.b64decode(imgstr), name=f"photo.{ext}"
                         )
-                        return redirect(reverse('payment_pending', args=[trainee.transaction_id]))
-                    else:
-                        trainee.payment_status = "Failed"
-                        trainee.save()
-                        messages.error(request, "Payment initiation failed. Please try again.")
-                        return render(request, 'trainees/add_trainee.html', {'form': form})
+                        new_trainee.photo = data  # Assign cropped image
+                    except (ValueError, TypeError):
+                        messages.error(request, "Invalid image data.")
+                        return render(request, "trainees/add_trainee.html", {"form": form})
 
-            except Exception as e:
-                logger.error(f"❌ Error during trainee registration/payment: {str(e)}", exc_info=True)
-                messages.error(request, "An error occurred while processing your payment. Please try again.")
+                new_trainee.save()
+                messages.success(
+                    request,
+                    "Trainee added successfully! Please proceed to payment.",
+                )
+                return redirect("addtrainee")
+
+            except IntegrityError:
+                messages.error(request, "There was an error saving the trainee.")
+                return render(request, "trainees/add_trainee.html", {"form": form})
 
     else:
         form = TraineesForm()
@@ -423,7 +371,7 @@ def trainee_details(request, id):
     trainee = Trainee.objects.get(id=id)
 
     context = {"trainee": trainee}
-    return render(request, "trainee.html", context)
+    return render(request, "trainees/trainee.html", context)
 
 
 def trainee_update(request, id):
@@ -482,7 +430,7 @@ import csv
 from django.http import HttpResponse
 
 
-def export_csv(request):
+def export_tcsv(request):
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type="text/csv")
     response["Content-Disposition"] = 'attachment; filename="data.csv"'
@@ -531,3 +479,26 @@ def activate_trainee(request, id):
     trainee.save()
     messages.success(request, "Trainee activated successfully.")
     return redirect("trainees") 
+
+
+def archived_trainees(request):
+    archived_trainees = Trainee.objects.filter(venue__status="Inactive").order_by("-created_at")
+    trainee_filter = TraineeFilter(request.GET, queryset=archived_trainees)
+    archived_trainees = trainee_filter.qs
+
+    return render(
+        request,
+        "trainees/archived_trainees.html",
+        {"trainee_filter": trainee_filter, "archived_trainees": archived_trainees},
+    )
+
+def unpaid_trainees(request):
+    unpaid_trainees = Trainee.objects.filter(venue__status="Active",payment_status="Pending").order_by("-created_at")
+    trainee_filter = TraineeFilter(request.GET, queryset=unpaid_trainees)
+    unpaid_trainees = trainee_filter.qs
+
+    return render(
+        request,
+        "trainees/archived_trainees.html",
+        {"trainee_filter": trainee_filter, "unpaid_trainees": unpaid_trainees},
+    )

@@ -20,54 +20,72 @@
 <!--khfufufu-->
 {% block content %}
 <div class="athlete-dew content-wrapper">
-  <div class="athlete flex">
-    <div class="img-ath">
-      <img src="{{trainee.photo.url}}" alt="" />
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title mb-0">Photo</h4>
+        </div>
+        <div class="card-body">
+          <img
+            src="{{trainee.photo.url}}"
+            alt=""
+            style="width: 100%; height: auto"
+          />
+        </div>
+      </div>
     </div>
-    <div class="line-ath">
-      <h1>{{trainee.first_name}} {{trainee.last_name}}</h1>
-      <p>{{trainee.email}}</p>
-      <hr />
-      <div class="small-details grid3">
-        <span
-          >Phone
-          <h3>{{trainee.contact}}</h3></span
-        >
-        <span
-          >Gender
-          <h3>{{trainee.gender}}</h3></span
-        >
-        <span
-          >Date of birth
-          <h3>{{trainee.date_of_birth}}</h3></span
-        >
-        <span
-          >School/ place of work
-          <h3>{{trainee.place}}</h3></span
-        >
-        <span
-          >Designation
-          <h3>{{trainee.designation}}</h3></span
-        >
-        <span
-          >Venue:
-          <h3>{{trainee.venue}}</h3></span
-        >
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h1>{{trainee.first_name}} {{trainee.last_name}}</h1>
+          <p>{{trainee.email}}</p>
+        </div>
+        <div class="card-body">
+          <div class="small-details row">
+            <span class="col-6 mb-2"
+              >Phone
+              <h3>{{trainee.contact}}</h3></span
+            >
+            <span class="col-6 mb-2"
+              >Gender
+              <h3>{{trainee.gender}}</h3></span
+            >
+            <span class="col-6 mb-2"
+              >Date of birth
+              <h3>{{trainee.date_of_birth}}</h3></span
+            >
+            <span class="col-6 mb-2"
+              >School/ place of work
+              <h3>{{trainee.place}}</h3></span
+            >
+            <span class="col-6 mb-2"
+              >Designation
+              <h3>{{trainee.designation}}</h3></span
+            >
+            <span class="col-6 mb-2"
+              >Venue:
+              <h3>{{trainee.venue}}</h3></span
+            >
 
-        <span
-          >TID:
-          <h3>{{trainee.tid}}</h3></span
-        >
-        <span
-          >Course
-          <h3>{{trainee.course}}</h3></span
-        >
-        <span
-          >District
-          <h3>{{trainee.district}}</h3></span
-        >
+            <span class="col-6 mb-2"
+              >Trainee Payment Status:
+              <h3 class="bg-success p-2 text-white">
+                {{trainee.payment_status}}
+              </h3></span
+            >
+            <span class="col-6 mb-2"
+              >Course
+              <h3>{{trainee.course}}</h3></span
+            >
+            <span class="col-6 mb-2"
+              >District
+              <h3>{{trainee.district}}</h3></span
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  {% endblock %}
 </div>
-{% endblock %}

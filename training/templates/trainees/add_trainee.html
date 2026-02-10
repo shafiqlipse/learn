@@ -216,12 +216,12 @@
                                     <div class="field">
                                       <label>.</label>
                                       <button
-                                        type="button"
+                                        type="submit"
                                         class="btn btn-primary"
-                                        data-toggle="modal"
-                                        data-target="#exampleModal"
+                                        {% comment %} data-toggle="modal"
+                                        data-target="#exampleModal" {% endcomment %}
                                       >
-                                        Continue to Payment
+                                        submit
                                       </button>
                                     </div>
                                   </div>
@@ -231,7 +231,7 @@
                           </div>
                           <!-- Button trigger modal -->
 
-                          <!-- Modal -->
+                          <!-- Moda
                           <div
                             class="modal fade"
                             id="exampleModal"
@@ -279,7 +279,7 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </div>l -->
                           {% if messages %}
                           <div class="messages">
                             {% for message in messages %}
@@ -375,45 +375,45 @@
       });
     </script>
     <script>
-$(document).ready(function () {
-    $("#id_course").change(function () {
-        var courseId = $(this).val();
+      $(document).ready(function () {
+          $("#id_course").change(function () {
+              var courseId = $(this).val();
 
-        if (courseId) {
-            $.ajax({
-                url: "/training/get-level/",  // URL for your Django view
-                data: { course_id: courseId },
-                success: function (data) {
-                    var levelDropdown = $("#id_level");
-                    levelDropdown.empty();
+              if (courseId) {
+                  $.ajax({
+                      url: "/training/get-level/",  // URL for your Django view
+                      data: { course_id: courseId },
+                      success: function (data) {
+                          var levelDropdown = $("#id_level");
+                          levelDropdown.empty();
 
-                    if (data.error) {
-                        alert(data.error);
-                        levelDropdown.append('<option value="">Select a level</option>');
-                        return;
-                    }
+                          if (data.error) {
+                              alert(data.error);
+                              levelDropdown.append('<option value="">Select a level</option>');
+                              return;
+                          }
 
-                    if (data.id && data.name) {
-                        // Single level returned
-                        levelDropdown.append('<option value="">Select a level</option>');
-                        levelDropdown.append(
-                            `<option value="${data.id}">${data.name}</option>`
-                        );
-                    } else {
-                        // No level assigned
-                        levelDropdown.append('<option value="">No level available</option>');
-                    }
-                },
-                error: function () {
-                    alert("Error fetching level. Please try again.");
-                },
-            });
-        } else {
-            $("#id_level").empty();
-            $("#id_level").append('<option value="">Select a level</option>');
-        }
-    });
-});
+                          if (data.id && data.name) {
+                              // Single level returned
+                              levelDropdown.append('<option value="">Select a level</option>');
+                              levelDropdown.append(
+                                  `<option value="${data.id}">${data.name}</option>`
+                              );
+                          } else {
+                              // No level assigned
+                              levelDropdown.append('<option value="">No level available</option>');
+                          }
+                      },
+                      error: function () {
+                          alert("Error fetching level. Please try again.");
+                      },
+                  });
+              } else {
+                  $("#id_level").empty();
+                  $("#id_level").append('<option value="">Select a level</option>');
+              }
+          });
+      });
 </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>

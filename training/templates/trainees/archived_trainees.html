@@ -31,7 +31,7 @@
           <div class="card-header">
             <div class="card-tools">
               <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                   <form method="get" class="form-control p-2">
                     <h2 class="card-title mb-0">Filter trainees</h2>
                     <div method="get" class="formlix flex">
@@ -53,10 +53,6 @@
                           <label for="school">Level</label>
                           {{ trainee_filter.form.level }}
                         </div>
-                        <div class="col-md-4">
-                          <label for="school">Date</label>
-                          {{ trainee_filter.form.created_at }}
-                        </div>
                         <div class="col-md-4"></div>
                       </div>
                       <button type="submit" class="btn btn-primary">
@@ -64,32 +60,6 @@
                       </button>
                     </div>
                   </form>
-                </div>
-                <div class="col-md-2">
-                  <h2 class="card-title mb-3">Reports</h2>
-                  <form method="post" class="form-contol">
-                    {% csrf_token %}
-                    <input
-                      type="submit"
-                      name="Accreditation"
-                      value="Accreditation"
-                      class="btn btn-primary mb-2"
-                      width="100%"
-                    />
-                  </form>
-                  <form method="post" class="form-contol">
-                    {% csrf_token %}
-                    <input
-                      type="submit"
-                      name="Certificate"
-                      value="Certificate"
-                      class="btn btn-secondary mb-2"
-                      width="100%"
-                    />
-                  </form>
-                  <a href="{% url 'export_tcsv' %}" class="btn btn-success mb-2"
-                    >Export CSV</a
-                  >
                 </div>
               </div>
             </div>
@@ -128,8 +98,8 @@
                   <td>{{trainee.created_at}}</td>
                   <td>{{trainee.payment_status}}</td>
                   <td>
-                    <a href="{% url 'update_trainee' trainee.id %}" class="btn btn-warning">Edit</a>
-                    <a href="{% url 'delete_trainee' trainee.id %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'update_trainee' trainee.id %}">Edit</a>
+                    <a href="{% url 'delete_trainee' trainee.id %}">Delete</a>
                   </td>
                 </tr>
                 {%endfor%}
