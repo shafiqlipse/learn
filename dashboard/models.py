@@ -34,7 +34,7 @@ class Venue(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=50)
-    level = models.ForeignKey('Level', on_delete=models.CASCADE, null=True, blank=True)
+    level = models.ManyToManyField('Level', null=True, blank=True)
     added_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
