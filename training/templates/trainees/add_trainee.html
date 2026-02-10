@@ -376,46 +376,34 @@
     </script>
     <script>
       $(document).ready(function () {
-          $("#id_course").change(function () {
-              var courseId = $(this).val();
-
-              if (courseId) {
-                  $.ajax({
-                      url: "/training/get-level/",  // URL for your Django view
-                      data: { course_id: courseId },
-                      success: function (data) {
-                          var levelDropdown = $("#id_level");
-                          levelDropdown.empty();
-
-                          if (data.error) {
-                              alert(data.error);
-                              levelDropdown.append('<option value="">Select a level</option>');
-                              return;
-                          }
-
-                          if (data.id && data.name) {
-                              // Single level returned
-                              levelDropdown.append('<option value="">Select a level</option>');
-                              levelDropdown.append(
-                                  `<option value="${data.id}">${data.name}</option>`
-                              );
-                          } else {
-                              // No level assigned
-                              levelDropdown.append('<option value="">No level available</option>');
-                          }
-                      },
-                      error: function () {
-                          alert("Error fetching level. Please try again.");
-                      },
-                  });
-              } else {
-                  $("#id_level").empty();
-                  $("#id_level").append('<option value="">Select a level</option>');
-              }
-          });
+        $("#id_course").change(function () {
+          var courseId = $(this).val();
+          if (courseId) {
+            $.ajax({
+              url: "/training/get-levels/", // Use the URL for the updated view
+              data: {
+                course_id: courseId,
+              },
+              success: function (data) {
+                var levelDropdown = $("#id_level");
+                levelDropdown.empty();
+                levelDropdown.append(
+                  '<option value="">Select a level</option>'
+                );
+                data.forEach(function (level) {
+                  levelDropdown.append(
+                    `<option value="${level.id}">${level.name}</option>`
+                  );
+                });
+              },
+            });
+          } else {
+            $("#id_level").empty();
+            $("#id_level").append('<option value="">Select a level</option>');
+          }
+        });
       });
-</script>
-
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <!--Datatable scripts-->
   </body>

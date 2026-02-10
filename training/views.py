@@ -52,38 +52,30 @@ def get_courses(request):
     return JsonResponse([], safe=False)
 
 def get_levels(request):
-    course_id = request.GET.get("course_id")
-
-    if not course_id:
-        return JsonResponse({"error": "Missing course_id parameter"}, status=400)
-
-    try:
-        course = Course.objects.select_related("level").get(id=course_id)
-    except Course.DoesNotExist:
-        return JsonResponse({"error": "Course not found"}, status=404)
-
-    if course.level:
-        level_data = {
-            "id": course.level.id,
-            "name": course.level.name,
-        }
-        return JsonResponse(level_data)
-    else:
-        return JsonResponse({"message": "This course has no level assigned"})
-
-
-def get_level(request):
     course_id = request.GET.get("course_id")  # Get the selected course ID from the request
     if course_id:
         try:
-            courses = Course.objects.get(id=course_id)  # Retrieve the course instance
-            levels = courses.level_set.values(
-                "id", "name"
-            )  # Get related disciplines
+            course = Course.objects.get(id=course_id)  # Retrieve the course instance
+            levels = course.level.values("id", "name")
+  # Get related levels
             return JsonResponse(list(levels), safe=False)
-        except Venue.DoesNotExist:
+        except Course.DoesNotExist:
             return JsonResponse({"error": "Level not found"}, status=404)
     return JsonResponse([], safe=False)
+
+
+# def get_level(request):
+#     course_id = request.GET.get("course_id")  # Get the selected course ID from the request
+#     if course_id:
+#         try:
+#             courses = Course.objects.get(id=course_id)  # Retrieve the course instance
+#             levels = courses.level_set.values(
+#                 "id", "name"
+#             )  # Get related disciplines
+#             return JsonResponse(list(levels), safe=False)
+#         except Venue.DoesNotExist:
+#             return JsonResponse({"error": "Level not found"}, status=404)
+#     return JsonResponse([], safe=False)
 
 def trainee_add(request):
     if request.method == 'POST':
