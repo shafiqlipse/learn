@@ -406,7 +406,7 @@ def trainee_update(request, id):
         "form": form,
         "trainee": trainee,
     }
-    return render(request, "update_trainee.html", context)
+    return render(request, "trainees/update_trainee.html", context)
 
 
 def trainee_delete(request, id):
@@ -415,7 +415,7 @@ def trainee_delete(request, id):
         stud.delete()
         return redirect("trainees")
 
-    return render(request, "delete_trainee.html", {"obj": stud})
+    return render(request, "trainees/delete_trainee.html", {"obj": stud})
 
 
 import csv
