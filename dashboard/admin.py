@@ -1,17 +1,17 @@
 from django.contrib import admin
 from accounts.models import *
 from .models import *
-# from training.models import *
+from training.models import *
 # from xcom.models import *
 # from championship.models import *
 
 
-# class TraineeAdmin(admin.ModelAdmin):  # Inherit from admin.ModelAdmin
-#     list_display = ("first_name", "last_name", "season", "venue", "course", "level", "place")
-#     search_fields = ("first_name", "last_name", "venue", "course", "level")
-#     list_filter = ("first_name", "last_name", "venue", "course", "level")
+class TraineeAdmin(admin.ModelAdmin):  # Inherit from admin.ModelAdmin
+    list_display = ("first_name", "last_name", "season", "venue", "course", "level", "place")
+    search_fields = ("first_name", "last_name", "venue", "course", "level")
+    list_filter = ("first_name", "last_name", "venue", "course", "level")
 # # Register your models here.
-# admin.site.register(Trainee, TraineeAdmin) 
+admin.site.register(Trainee, TraineeAdmin) 
 admin.site.register(User)
 # admin.site.register(XTrainee)
 admin.site.register(Season)
