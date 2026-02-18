@@ -9,7 +9,7 @@ from training.models import *
 class TraineeAdmin(admin.ModelAdmin):  # Inherit from admin.ModelAdmin
     list_display = ("first_name", "last_name", "season", "venue", "course", "level", "place")
     search_fields = ("first_name", "last_name", "venue", "course", "level")
-    list_filter = ("first_name", "last_name", "venue", "course", "level")
+    list_filter = ( "venue", "course", "level")
 # # Register your models here.
 admin.site.register(Trainee, TraineeAdmin) 
 admin.site.register(User)
