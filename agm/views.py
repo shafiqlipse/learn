@@ -20,40 +20,23 @@ from io import BytesIO
 
 
 
-
 def comiser_add(request):
     if request.method == "POST":
         form = ComisersForm(request.POST, request.FILES)
-
+        
         if form.is_valid():
-            try:
-                new_comiser = form.save(commit=False)
-
-                cropped_data = request.POST.get("photo_cropped")
-                if cropped_data:
-                    try:
-                        format, imgstr = cropped_data.split(";base64,")
-                        ext = format.split("/")[-1]
-                        data = ContentFile(
-                            base64.b64decode(imgstr), name=f"photo.{ext}"
-                        )
-                        new_comiser.photo = data  # Assign cropped image
-                    except (ValueError, TypeError):
-                        messages.error(request, "Invalid image data.")
-                        return render(request, "comiser/comiser_new.html", {"form": form})
-
-                new_comiser.save()
-                messages.success(request, "Comiser added successfully!")
-                return redirect("addcomiser")
-
-            except IntegrityError:
-                messages.error(request, "There was an error saving the comiser.")
-                return render(request, "comiser/comiser_new.html", {"form": form})
-
+            comiser = form.save()
+            messages.success(request, f'Comiser "{comiser.first_name}" added successfully!')
+            return redirect('addcomiser')  # Redirect to list or detail view
+        else:
+            messages.error(request, 'Please correct the errors below.')
     else:
         form = ComisersForm()
-
-    context = {"form": form}
+    
+    context = {
+        "form": form,
+        "title": "Add New Comiser"
+    }
     return render(request, "comiser/comiser_new.html", context)
 
 

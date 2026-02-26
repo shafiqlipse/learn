@@ -72,84 +72,41 @@
                             enctype="multipart/form-data"
                           >
                             {% csrf_token %}
-                            <div class="form-group mb-3">
-                              {% if messages %}
-                              <ul class="messages">
-                                {% for message in messages %}
-                                <li
-                                  class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %}"
-                                >
-                                  {{ message }}
-                                </li>
-                                {% endfor %}
-                              </ul>
-                              {% endif %}
-                            </div>
-                            <div class="imgbox">
-                              <div class="field">
-                                <label>{{form.photo.label}} </label>
-                                <div
-                                  id="photos_preview"
-                                  class="preview-container"
-                                ></div>
-                              </div>
-                              <div class="field">
-                                <input
-                                  type="file"
-                                  name="photo"
-                                  accept="image/*"
-                                  id="id_photo"
-                                  class="form-control"
-                                />
-                              </div>
-                            </div>
-                            <label for="first_name" class="form-label"
-                              >First Name</label
-                            >
-                            <input
-                              class="form-control"
-                              name="first_name"
-                              type="text"
-                              id="first_name"
-                              required=""
-                              placeholder="First Name"
-                            />
 
+                            <div class="form-group mb-3">
+                              {% if messages %} {% for message in messages %}
+                              <div class="alert alert-danger">
+                                {{ message }}
+                              </div>
+                              {% endfor %} {% endif %}
+                            </div>
+
+                            <div class="field">
+                              <label>{{form.photo.label}} </label>
+                              {{form.photo}}
+                            </div>
+                            <div class="form-group mb-3">
+                              <label for="first_name" class="form-label"
+                                >First Name</label
+                              >
+                              {{form.first_name}}
+                            </div>
                             <div class="form-group mb-3">
                               <label for="last_name" class="form-label"
                                 >Last Name</label
-                              >
-                              <input
-                                class="form-control"
-                                type="last_name"
-                                id="last_name"
-                                required=""
-                                placeholder="Last Name"
-                              />
+                              >{{form.last_name}}
                             </div>
 
                             <div class="form-group mb-3">
                               <label for="comittee" class="form-label"
                                 >Sport</label
                               >
-                              <input
-                                class="form-control"
-                                type="comittee"
-                                required=""
-                                id="comittee"
-                                placeholder="Enter your Sport"
-                              />
+                              {{form.comittee}}
                             </div>
 
                             <div class="form-group mb-3">
                               <label for="role" class="form-label">Role</label>
-                              <input
-                                class="form-control"
-                                type="role"
-                                required=""
-                                id="role"
-                                placeholder="Enter your role"
-                              />
+                              {{form.role}}
                             </div>
 
                             <div class="form-group mb-0 row">
