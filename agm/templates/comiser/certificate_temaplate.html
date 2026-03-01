@@ -16,22 +16,22 @@
         margin: 0;
         padding: 0;
       }
-      .comiser-table {
+      .delegate-table {
         width: 100%;
         border-collapse: collapse;
       }
-      .header .comisers table tbody tr td {
+      .header .delegates table tbody tr td {
         padding-top: 290px;
         padding-left: 70px;
         padding-right: 30px;
         margin: 0;
       }
-      .header .comisers table tbody tr .comiser-cell .comiser-info {
+      .header .delegates table tbody tr .delegate-cell .delegate-info {
         font-size: 1.4em; /* Adjust font size */
         text-align: center; /* Align text to the left */
         width: 800px; /* Set a fixed width to ensure text fits on one line */
       }
-      .header .comisers table tbody tr .comiser-cell .comiser-image img {
+      .header .delegates table tbody tr .delegate-cell .delegate-image img {
         width: 120px;
         height: 120px;
         image-orientation: from-image;
@@ -39,36 +39,36 @@
       }
     </style>
     <div class="header">
-      <div class="comisers">
-        <table class="comiser-table">
+      <div class="delegates">
+        <table class="delegate-table">
           <tbody>
-            {% for comiser in comisers %}
+            {% for delegate in comisers %}
             <tr>
-              <td class="comiser-cell">
-                <div class="comiser-info">
+              <td class="delegate-cell">
+                <div class="delegate-info">
                   <span
                     ><strong
-                      >{{ comiser.first_name|upper }}
-                      {{comiser.last_name|upper}}
+                      >{{ delegate.first_name|upper }}
+                      {{delegate.last_name|upper}}
                     </strong></span
                   ><br />
 
-                  <span>{{ comiser.designation|upper }}</span><br />
-                  <span>{{ comiser.school|upper }}</span><br />
-                  <span>{{ comiser.district|upper }} </span><br />
+                  <span>{{ delegate.comittee|upper }}</span><br />
+                  <span>{{ delegate.role|upper }}</span><br />
+                 
                 </div>
               </td>
-              <td class="comiser-cell">
-                <div class="comiser-image">
-                  {% if comiser.photo %}
+              <td class="delegate-cell">
+                <div class="delegate-image">
+                  {% if delegate.photo %}
                   <img
-                    src="{{ comiser.photo.path }}"
-                    alt="{{ comiser.first_name }}"
+                    src="{{ delegate.photo.path }}"
+                    alt="{{ delegate.first_name }}"
                   />
                   {% else %}
                   <img
                     src="{% static 'images/profile.png' %}"
-                    alt="{{ comiser.last_name }}"
+                    alt="{{ delegate.last_name }}"
                   />
                   {% endif %}
                 </div>

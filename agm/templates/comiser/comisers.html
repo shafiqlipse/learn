@@ -24,9 +24,26 @@
 
   <div class="head">
     <div class="others d-flex">
-      <a href="{% url 'teaccred' %}" class="btn btn-primary">Accreditation</a>
-
-      <a href="{% url 'export_csv' %}">Export CSV</a>
+      <form method="post" class="form-contol">
+        {% csrf_token %}
+        <input
+          type="submit"
+          name="Accreditation"
+          value="Accreditation"
+          class="btn btn-primary mb-2"
+          width="100%"
+        />
+      </form>
+      <form method="post" class="form-contol">
+        {% csrf_token %}
+        <input
+          type="submit"
+          name="Certificate"
+          value="Certificate"
+          class="btn btn-secondary mb-2"
+          width="100%"
+        />
+      </form>
     </div>
   </div>
   <div class="row">

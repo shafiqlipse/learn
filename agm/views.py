@@ -65,8 +65,44 @@ def generate_accreditation_pdf(request):
 def comisers(request):
     # Get all comisers
     comisers = Comiser.objects.all()
+        # Apply the filter
 
-    return render(request, "comiser/comisers.html", {"comisers": comisers})
+
+    if request.method == "POST":
+        # Check which form was submitted
+        if "Accreditation" in request.POST:
+            template = get_template("comiser/acred.html")
+            filename = "Trainee_Accreditation.pdf"
+        elif "Certificate" in request.POST:
+            template = get_template(
+                "comiser/certificate_temaplate.html"
+            )  # Your certificate template
+            filename = "Trainee_Certificate.pdf"
+        else:
+            return HttpResponse("Invalid form submission")
+
+        # Generate PDF
+        context = {"comisers": comisers}
+        html = template.render(context)
+
+        # Create a PDF
+        pdf_buffer = BytesIO()
+        pisa_status = pisa.CreatePDF(html, dest=pdf_buffer)
+
+        if pisa_status.err:
+            return HttpResponse("We had some errors <pre>" + html + "</pre>")
+
+        pdf_buffer.seek(0)
+
+        # Return the PDF as a response
+        response = HttpResponse(content_type="application/pdf")
+        response["Content-Disposition"] = f'attachment; filename="{filename}"'
+        response.write(pdf_buffer.getvalue())
+        return response
+    else:
+        # Render the filter form
+
+        return render(request, "comiser/comisers.html", {"comisers": comisers})
 
 
 def comiser_details(request, id):
