@@ -1,0 +1,112 @@
+{% extends "dashboard/dashboard.html" %}
+
+<!--static-->
+{% block title %}Trainees{% endblock %}
+<!--static-->
+{% load static %}
+<!--khfufufu-->
+{% block content %}
+
+<div class="content">
+  <!-- Start Content-->
+  <div class="container-fluid">
+    <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+      <div class="flex-grow-1">
+        <h4 class="fs-18 fw-semibold m-0">Results</h4>
+      </div>
+
+      <div class="text-end">
+        <ol class="breadcrumb m-0 py-0">
+          <li class="breadcrumb-item">
+            <a href="javascript: void(0);">Pages</a>
+          </li>
+          <li class="breadcrumb-item active">Results</li>
+        </ol>
+      </div>
+    </div>
+    <!-- end page title -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-tools">
+              <div class="row">
+                <div class="col-md-10">
+                  <form method="get" class="form-control p-2">
+                    <h2 class="card-title mb-0">Filter results</h2>
+                    <div method="get" class="formlix flex">
+                      <div method="get" class="row">
+                        <div class="col-md-4">
+                          <label for="gender">Candidate</label>
+                          {{ resultsfilter.form.candidate }}
+                        </div>
+
+                        <div class="col-md-4">
+                          <label for="school">Election</label>
+                          {{ resultsfilter.form.election }}
+                        </div>
+                        <div class="col-md-4">
+                          <label for="school">Code</label>
+                          {{ resultsfilter.form.result_code }}
+                        </div>
+  
+                        <div class="col-md-4"></div>
+                      </div>
+                      <button type="submit" class="btn btn-primary">
+                        Apply Filter
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- end card header -->
+          </div>
+          <!-- end card header -->
+
+          <div class="card-body">
+            <table
+              id="schools"
+              class="table dt-responsive table-responsive nowrap"
+            >
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Candidate</th>
+                  <th>Election</th>
+                  <th>Votes count</th>
+                  <th>Position</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                {% for result in resultsfilter.qs %}
+                <tr>
+                  <td>
+                   {{result.result_code}}
+                  </td>
+
+                  <td>{{result.candidate}}</td>
+                  <td>{{result.election}}</td>
+                  <td>{{result.votes}}</td>
+                  <td>{{result.position}}</td>
+         
+        
+                </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+          </div>
+          <!-- end card body -->
+        </div>
+        <!-- end card -->
+      </div>
+      <!-- end col -->
+    </div>
+    <!-- end row -->
+  </div>
+  <!-- container-fluid -->
+</div>
+
+{% endblock %}
+<!-- content -->

@@ -1,0 +1,170 @@
+{% extends "dashboard/dashboard.html" %} {%load static%}
+<!---->
+{% block title %} {{election}}{% endblock %}
+<!---->
+
+{%block content%}
+<div class="container-fluid">
+  <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+    <div class="flex-grow-1">
+      <h4 class="fs-18 fw-semibold m-0">{{election}}</h4>
+    </div>
+
+    <div class="text-end">
+      <ol class="breadcrumb m-0 py-0">
+        <li class="breadcrumb-item">
+          <a href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">{{election}}</li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            x``
+          >
+            Declare Results
+          </button>
+          <table
+            id="schools"
+            class="table table-striped dt-responsive nowrap w-100"
+          >
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Level</th>
+                <th>Position</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for result in results%}
+              <tr>
+                <td>
+                  {{result.candidate}}
+                </td>
+                <td>{{ result.votes }}</td>
+                <td>{{ result.position }}</td>
+
+                <td>
+                  <a
+                    href="#"
+                    class="edit-result-btn btn btn-info"
+                    data-id="{{ result.id }}"
+                    data-name="{{ result.name }}"
+                    data-country="{{ result.country }}"
+                  >
+                    <i class="fa fa-pencil"></i>Edit
+                  </a>
+                </td>
+                <td>
+                  <a href="{% url 'deleteresult' result.id %}" class="btn btn-danger"
+                    ><i class="fa fa-trash"></i>Delete</a
+                  >
+                </td>
+              </tr>
+
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+        <!-- end card body-->
+      </div>
+      <!-- end card -->
+    </div>
+    <!-- end col-->
+  </div>
+  <!-- end row-->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post" class="form-control">
+            {% csrf_token %} {{cform.as_p}}
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="editElectionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="POST" enctype="multipart/form-data" id="editElectionForm">
+          {% csrf_token %}
+          <input type="hidden" name="election_id" id="edit_election_id" />
+          <div class="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              id="edit_election_name"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label>Logo</label>
+            <input
+              type="file"
+              name="logo"
+              id="edit_election_logo"
+              class="form-control"
+            />
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document
+        .querySelectorAll(".edit-election-btn")
+        .forEach(function (button) {
+          button.addEventListener("click", function (e) {
+            e.preventDefault();
+            document.getElementById("edit_election_id").value = this.dataset.id;
+            document.getElementById("edit_election_name").value =
+              this.dataset.name;
+            $("#editElectionModal").modal("show");
+          });
+        });
+    });
+  </script>
+</div>
+{% endblock %}

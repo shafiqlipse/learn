@@ -10,6 +10,7 @@ xcom/migrations/*
 trainers/migrations/*
 agm/migrations/*
 championship/migrations/*
+elections/migrations/*
 
 logs/airtel_payments.log
 
