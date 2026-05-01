@@ -21,7 +21,27 @@
       </ol>
     </div>
   </div>
+  <div class="col-md-10">
+    <form method="get" class="form-control p-2">
+      <h2 class="card-title mb-0">Filter trainees</h2>
+      <div method="get" class="formlix flex">
+        <div method="get" class="row">
+          <div class="col-md-4">
+            <label for="gender">Sport</label>
+            {{ comisers_filter.form.comittee }}
+          </div>
 
+          <div class="col-md-4">
+            <label for="school">Role</label>
+            {{ comisers_filter.form.role }}
+          </div>
+        
+          <div class="col-md-4">
+        <button type="submit" class="btn btn-primary">Apply Filter</button></div>
+        </div>
+      </div>
+    </form>
+  </div>
   <div class="head">
     <div class="others d-flex">
       <form method="post" class="form-contol">
@@ -66,7 +86,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for comisers in comisers %}
+                  {% for comisers in allcomisers %}
                   <tr>
                     <td>
                       <a href="{% url 'comiser' comisers.id%}"

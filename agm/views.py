@@ -7,6 +7,7 @@ from xhtml2pdf import pisa
 from io import BytesIO
 from .models import *
 from .forms import *
+from .filters import *
 from django.db import IntegrityError
 from django.core.files.base import ContentFile
 import base64
@@ -66,7 +67,8 @@ def comisers(request):
     # Get all comisers
     comisers = Comiser.objects.all()
         # Apply the filter
-
+    comisers_filter = ComiserFilter(request.GET, queryset=comisers)
+    allcomisers = comisers_filter.qs
 
     if request.method == "POST":
         # Check which form was submitted
@@ -82,7 +84,7 @@ def comisers(request):
             return HttpResponse("Invalid form submission")
 
         # Generate PDF
-        context = {"comisers": comisers}
+        context = {"allcomisers": allcomisers,"comisers_filter":comisers_filter}
         html = template.render(context)
 
         # Create a PDF
@@ -102,7 +104,7 @@ def comisers(request):
     else:
         # Render the filter form
 
-        return render(request, "comiser/comisers.html", {"comisers": comisers})
+        return render(request, "comiser/comisers.html", context = {"allcomisers": allcomisers,"comisers_filter":comisers_filter})
 
 
 def comiser_details(request, id):
