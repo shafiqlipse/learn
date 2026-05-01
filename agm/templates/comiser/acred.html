@@ -51,7 +51,7 @@
       <div class="athletes">
         <table>
           <tbody>
-            {% for trainee in comisers %}
+            {% for trainee in allcomisers %}
             <!---->
             {% if forloop.counter0|divisibleby:2 %}
             <!-- Start a new row for every even-numbered trainee -->
@@ -85,8 +85,8 @@
                         </span>
                         <br />
                         <span
-                          >{{ trainee.comittee|upper }} 
-                        <br />
+                          >{{ trainee.comittee|upper }}
+                          <br />
                           {{trainee.role|upper }}</span
                         ><br />
                         <span></span><br />
