@@ -17,8 +17,8 @@
       {% csrf_token %}
 
       <div class="schooled">
-        <div class="fields">
-          {{ cform.non_field_errors }} {{ cform.errors }}
+        <div class="col-md-6s">
+          {{ form.non_field_errors }} {{ form.errors }}
           <!---->
           {% if messages %}
           <ul class="messages">
@@ -31,83 +31,80 @@
             {% endfor %}
           </ul>
           {% endif %}
-          <div class="left flex">
-            <div class="imgbox">
-              <div class="field">
-                <label>{{form.photo.label}} </label>
-                <div id="photos_preview" class="preview-container"></div>
-              </div>
-              <div class="field">
-                <input
-                  type="file"
-                  name="photo"
-                  accept="image/*"
-                  id="id_photo"
-                  class="form-control"
-                />
-              </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label for="photo">{{form.photo.label}}</label>
+              {{form.photo}}
             </div>
-            <div class="fiil grid2">
-              <div class="field">
-                <label>First Name</label>
-                {{form.first_name}}
-              </div>
-              <div class="field">
-                <label>Last Name</label>
-                {{form.last_name}}
-              </div>
-
-              <div class="field">
-                <label>School</label>
-                {{form.place}}
+            <div class="col-md-9">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label>First Name</label>
+                  {{form.first_name}}
+                </div>
+                <div class="col-md-6">
+                  <label>Last Name</label>
+                  {{form.last_name}}
+                </div>
               </div>
 
-              <div class="field">
-                <label>Phone:</label>
-                {{form.contact}}
-              </div>
-              <div class="field">
-                <label>Email:</label>
-                {{form.email}}
-              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label>School</label>
+                  {{form.place}}
+                </div>
 
-              <div class="field">
-                <label>gender</label>
-                {{form.gender}}
+                <div class="col-md-6">
+                  <label>Phone:</label>
+                  {{form.contact}}
+                </div>
               </div>
-              <div class="field">
-                <label>Region</label>
-                {{form.discipline}}
-              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label>Email:</label>
+                  {{form.email}}
+                </div>
 
-              <div class="field">
-                <label>Course</label>
-                {{form.course}}
+                <div class="col-md-6">
+                  <label>gender</label>
+                  {{form.gender}}
+                </div>
               </div>
-              <div class="field">
-                <label>Region</label>
-                {{form.discipline}}
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label>Course</label>
+                  {{form.course}}
+                </div>
+                <div class="col-md-4">
+                  <label>Venue</label>
+                  {{form.venue}}
+                </div>
+                <div class="col-md-4">
+                  <label>Level</label>
+                  {{form.level}}
+                </div>
               </div>
-              <div class="field">
-                <label>Date of birth</label><br />
-                {{form.date_of_birth}}
-              </div>
-              <div class="field">
-                <label>Designation</label><br />
-                {{form.designation}}
-              </div>
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label>Date of birth</label>
+                  {{form.date_of_birth}}
+                </div>
 
-              <div class="field">
-                <label>District/ City/ Municipality</label>
-                {{form.district}}
-              </div>
-              <div class="field">
-                <label>Venue</label>
-                {{form.venue}}
-              </div>
-              <div class="field">
-                <label>Level</label>
-                {{form.level}}
+                <div class="col-md-4">
+                  <label>Designation</label>
+                  {{form.designation}}
+                </div>
+                </div>
+
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label>District/ City/ Municipality</label>
+                  {{form.district}}
+                </div>
+                <div class="col-md-4">
+                  <label>Residence</label>
+                  {{form.residence_type}}
+                </div>
               </div>
             </div>
           </div>
